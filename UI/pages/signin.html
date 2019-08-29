@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <title>Tolekapp | Sign in</title>
+
+</head>
+<body class="main-background">
+  <div class="container">
+    <header>
+      <h1 id="logo"><a href="../index.html">teamate</a></h1>
+      <nav role="navigation">
+        <ul id="main-nav">
+          <li><a href="./dashboard.html">User</a></li>
+          <li><a href="./dashboard.html">Admin</a></li>
+          <li><a href="./signin.html">Login</a></li>
+          <li><a href="./signup.html">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main role="main" class="auth-main">  
+      <section id="form-wrapper">
+        <h1>User Login</h1>
+        <form action="#" class="auth-form">
+          <input type="email" placeholder="Enter your email" id="email" required>
+          <div id="helpEmail" class="inputError"></div>
+          <input type="password" placeholder="Enter your password" id="password">
+          <div id="helpPassword" class="inputError"></div>
+          <label for="admin" id="admin-connect">
+            <input type="checkbox" name="admin"> I am Admin
+          </label> <br>
+          <input type="submit" value="login">
+        </form>
+
+      </section>
+    </main>
+    <footer class="front-footer">
+      <p>&copy Andela 2019</p>
+      <div class="contact-info">
+        <p>
+          <i class="fa fa-map"></i>Kigali, Rwanda &nbsp; 
+          <i class="fa fa-enveloppe"></i>contact@teamwork.rw &nbsp;
+          <i class="fa fa-phone"></i>+250-000-000-000
+      </p>
+      </div>
+      <div id="social-container"> <!--Use font awesome-->
+        <div class="social" id="facebook" title="Visit our Facebook page"><i class="fa fa-facebook"></i></div>
+        <div class="social" id="twitter" title="Visit us on Twitter"><i class="fa fa-twitter"></i></div>
+        <div class="social" id="linkedin" title="Have a look on our Linked page"><i class="fa fa-linkedin"></i></div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
