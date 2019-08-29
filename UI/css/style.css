@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins&display=swap');
+
+* {
+    --main-bg-color: hsl(257, 40%, 49%);
+    --headings-font: "Poppins", sans-serif;
+    --body-font: "Open Sans", sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    padding: 3vh 5% 0 5%;
+ }
+
+.main-background {
+    background-image: url("../images/bg-desktop.svg");
+    background-color: var(--main-bg-color);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-size: auto 100%;
+}
+
+/* ------ NAVIGATION BAR ---------*/
+header,
+#main-nav {
+    display: flex;
+}
+
+header, 
+h1 {
+    font-family: var(--headings-font);
+}
+
+header {
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+#logo {
+    font-size: 1.5em;
+}
+
+#main-nav {
+    font-size: 1.2em;
+    justify-content: space-around;
+    align-self: flex-end;
+    list-style: none;
+}
+
+ ul a, 
+ #logo a,
+ .logo a {
+    text-transform: uppercase;
+    color: #fff;
+ }
+
+main {
+    display: flex;
+    margin-top: 2.5%;
+}
+
+#img-container img {
+    max-width: 75vw;
+    max-height: 70vh;
+}
+
+#txt-container {
+    padding: 1.5em 1em 1em 2vw;
+    max-width: 40vw;
+    max-height: 100%;
+}
+
+#txt-container h1 {
+    width: 90%;
+    font-size: calc(2em);
+    margin: 0.5em 0;
+}
+
+h1 {
+    color: #fff;
+    letter-spacing: 0.03em;
+}
+
+p {
+    font-size: 1.2em;
+    font-family: var(--body-font);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0.5em 0 1em;
+}
+
+#social-container {
+    display: flex;
+    /*align-self: flex-end;*/
+}
+  
+.social {
+    border: 0.05em solid #fff;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    padding: 0.4em;
+    margin: 0.4em;
+    cursor: pointer;
+}
+
+#register-button {
+    background-color: #fff;
+    border: 0;
+    border-radius: 5em;
+    padding: 0.05em;
+    box-shadow: 0 15px 20px rgba(45, 45, 45, 0.664);
+    cursor: pointer;
+    color: var(--background-color);
+    text-align: center;
+    width: 35%;
+    margin: 1em 0;
+    padding: 0.7em;
+}
+
+.attribution {
+    font-size: calc(11px + 0.25vw);
+    text-align: center;
+    padding: 4px;
+    margin: 0;
+}
+
+.attribution a {
+    color: #fff;
+}
+
+/* =======================================================================
+                      signup.html || signin.html
+   =======================================================================
+*/
+
+.auth-main, .dash-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form-wrapper {
+    border: 1px solid var(--main-bg-color);
+    background: hsla(0,0%,100%,.3);
+    border-radius: 2px;
+    padding: 2em;
+    text-align: center;
+    width: 30vw;
+}
+
+input[type=email], 
+input[type=password],
+input[type=submit],
+input[type=text] {
+    width: 100%;
+    border-radius: 5px;
+    padding: .99em;
+    margin-bottom: .9em;
+}
+
+input[type=submit] {
+    text-transform: uppercase;
+    background: #fff;
+}
+
+input[type=submit]:hover {
+    color: #fff;
+    background-color: var(--main-bg-color);
+}
+
+input[type=checkbox] {    
+    margin-bottom: .9em;
+}
+
+/* =======================================================================
+                              DASHBOARD
+   =======================================================================
+*/
+
+.dash-header {
+    background-color: var(--main-bg-color);
+}
+
+.padding-lt {
+    padding-left: 5%;
+}
+
+.padding-rt {
+    padding-right: 5%;
+}
+
+#dash-last-child {
+    color: white;
+    padding-right: 5%;
+}
+
+.dash-main {
+    width: 65vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dash-main p {
+    color: blueviolet;
+}
+
+.dash-footer {
+    background-color: var(--main-bg-color);
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+.dash-footer, .front-footer {
+    display: flex;
+    flex-wrap: wrap;
+    color: #fff;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.social:hover {
+    color: #fff;
+}
+#twitter:hover {
+    background-color: #38A1F3;
+    
+}
+
+#facebook:hover {
+    background-color: #4267b2;
+}
+
+#linkedin:hover {
+    background-color: #0077B5;
+}
+
+/* =======================================================================
+                         Responsive design
+   =======================================================================
+*/
+
+/* 850px */
+@media screen and (max-width: 53.125em) { 
+    body {
+        background-image: url("../images/bg-mobile.svg");
+        background-size: 100%;
+    }
+
+    #container {
+        align-items: center;
+    }
+
+    #logo {
+        width: 43%;
+        padding: 5% 0;
+    }
+    
+    .logo {
+        width: 43%;
+        padding: 5% 0;
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 1.5em;
+        margin: 5% auto;
+        width: 78%;
+    }
+    
+    p {
+        font-weight: 400;
+        margin: 5% auto;
+        width: 85%;
+        font-size: 1em;
+    }
+    
+    main {
+        flex-direction: column;
+        align-content: center;
+        text-align: center;
+    }
+
+    #img-container {
+        margin: 12% 0 10%;
+    }
+
+    #img-container img {
+        width: 85%;
+        max-width: 500px;
+    }
+
+    #register-button {
+        margin: 7% auto;
+        width: 55%;
+        font-size: 0.9em;
+        padding: 1rem;
+      }
+    
+    #social-container {
+        margin: 5vh 0;
+        justify-content: center;
+        align-self: center;   
+    }
+    
+    .attribution {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+    }
+
+    #txt-container {
+        padding: 0;
+        max-width: 100vw;
+    }
+
+    footer {
+        text-align: center;
+    }
+
+    /* --- sign in --- */
+    #form-wrapper {
+        width: 90vw;
+    }
+
+}
+
+/* 1000px */
+@media screen and (min-width: 53.125em) and (max-width: 62.500em) { 
+    body {
+        background-image: url("../images/bg-mobile.svg");
+    }
+
+    #container {
+        justify-content: space-between;
+        padding: 2vh 2% 0 3%;
+    }
+    
+    h1 {
+        font-weight: 700;
+        font-size: 1.5em;
+        margin: 5% auto;
+        width: 78%;
+    }
+    
+    p {
+        font-weight: 400;
+        margin: 5% auto;
+        width: 85%;
+        font-size: 1em;
+      }
+    
+    #logo-container {
+        max-height: 15vh;
+        margin-bottom: 3vh;
+    }
+
+    #logo {
+        width: 20vw;
+    }
+    
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #img-container img {
+        max-height: 63vh;
+    }
+
+    #register-button {
+        font-size: 18px;
+        padding: 1em 5.5em;
+      }
+    
+    #social-container {
+        margin: 5vh auto;
+        justify-content: space-between;
+        width: 25vw;   
+    }
+    
+    #txt-container {
+       text-align: center;
+    }
+
+    #txt-container h1,
+    #txt-container p {
+        max-width: 85vw;
+        margin: 5vh;
+    }
+
+}
