@@ -54,23 +54,66 @@ header {
     justify-content: space-between;
 }
 
-#logo {
+#logo,
+#bars {
     font-size: 1.5em;
 }
 
 #main-nav {
     font-size: 1.2em;
-    justify-content: space-around;
+    justify-content: stretch;
     align-self: flex-end;
     list-style: none;
+    flex-direction: column;
 }
 
- ul a, 
  #logo a,
- .logo a {
+ .logo a, i {
     text-transform: uppercase;
     color: #fff;
- }
+}
+
+/*=====modal menu=======
+*/
+
+#modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    border-radius: 4px;
+    color: #090909;
+    /*height: 100%;*/
+    width: 20vw;
+    right: 10px;
+    top: 12px;
+    background-color: #fff;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.051);
+    transform-origin: 50% 10%;
+    overflow: hidden;
+    padding-right: 2em;
+    padding-top: 2em;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus,
+  #bars {
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* ------------*/
 
 main {
     display: flex;
@@ -200,6 +243,10 @@ input[type=checkbox] {
     background-color: var(--main-bg-color);
 }
 
+#admin-nav-bloc {
+    margin-right: 15px;
+}
+
 .padding-lt {
     padding-left: 5%;
 }
@@ -211,6 +258,7 @@ input[type=checkbox] {
 #dash-last-child {
     color: white;
     padding-right: 5%;
+    display: flex;
 }
 
 .dash-main {
@@ -243,15 +291,18 @@ input[type=checkbox] {
 }
 #twitter:hover {
     background-color: #38A1F3;
+    border: 1px solid #38A1F3;
     
 }
 
 #facebook:hover {
     background-color: #4267b2;
+    border: 1px solid #4267b2;
 }
 
 #linkedin:hover {
     background-color: #0077B5;
+    border: 1px solid #0077B5;
 }
 
 /* =======================================================================

@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../css/style.css">
   
   <title>Tolekapp | Sign in</title>
@@ -15,12 +16,16 @@
     <header>
       <h1 id="logo"><a href="../index.html">teamate</a></h1>
       <nav role="navigation">
-        <ul id="main-nav">
-          <li><a href="./dashboard.html">User</a></li>
-          <li><a href="./dashboard.html">Admin</a></li>
-          <li><a href="./signin.html">Login</a></li>
-          <li><a href="./signup.html">Register</a></li>
-        </ul>
+          <i class="fa fa-bars" id="bars"></i>
+          <div id="modal" class="modal">
+            <span class="close">&times;</span>
+          <ul id="main-nav" class="modal-content">
+            <li><a href="./dashboard.html">User</a></li>
+            <li><a href="./dashboard.html">Admin</a></li>
+            <li><a href="./signin.html">Login</a></li>
+            <li><a href="./signup.html">Register</a></li>
+          </ul>
+      </div>
       </nav>
     </header>
     <main role="main" class="auth-main">  
@@ -43,17 +48,19 @@
       <p>&copy Andela 2019</p>
       <div class="contact-info">
         <p>
-          <i class="fa fa-map"></i>Kigali, Rwanda &nbsp; 
-          <i class="fa fa-enveloppe"></i>contact@teamwork.rw &nbsp;
-          <i class="fa fa-phone"></i>+250-000-000-000
-      </p>
+          <i class="fa fa-map-marker"></i> Kigali, Rwanda &nbsp; 
+          <i class="fa fa-envelope"></i> contact@teamwork.rw &nbsp;
+          <i class="fa fa-phone"></i> +250-000-000-000
+        </p>
       </div>
-      <div id="social-container"> <!--Use font awesome-->
+      <div id="social-container">
         <div class="social" id="facebook" title="Visit our Facebook page"><i class="fa fa-facebook"></i></div>
         <div class="social" id="twitter" title="Visit us on Twitter"><i class="fa fa-twitter"></i></div>
         <div class="social" id="linkedin" title="Have a look on our Linked page"><i class="fa fa-linkedin"></i></div>
       </div>
     </footer>
   </div>
+
+  <script src="../js/script.js"></script>
 </body>
 </html>
