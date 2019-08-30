@@ -275,7 +275,7 @@ input[type=checkbox] {
     background-color: var(--main-bg-color);
     position: absolute;
     width: 100%;
-    bottom: 0;
+    margin: 0;
 }
 
 .dash-footer, .front-footer {
@@ -303,6 +303,38 @@ input[type=checkbox] {
 #linkedin:hover {
     background-color: #0077B5;
     border: 1px solid #0077B5;
+}
+
+/* =======================================================================
+                         Employees posts styles
+   =======================================================================
+*/
+.user-post {
+    display: flex;
+    background: #f5fcfe;
+    padding: 2em;
+    margin-bottom: 2em;
+    border-radius: .5rem;
+    box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
+                0 4px 8px 0 rgba(17,22,26,.08), 
+                0 8px 16px 0 rgba(17,22,26,.08);
+    /*align-items: baseline;*/
+}
+
+.dash-body {
+    background-color: rgb(250, 251, 252);
+}
+
+.post-illustration {
+    width: 35%;
+    height: 100%;
+    margin-right: 2em;
+}
+
+.post-illustration  img {
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem;
 }
 
 /* =======================================================================
@@ -393,6 +425,10 @@ input[type=checkbox] {
         width: 90vw;
     }
 
+    .user-post {
+        flex-wrap: wrap;
+    }
+
 }
 
 /* 1000px */
@@ -457,6 +493,10 @@ input[type=checkbox] {
     #txt-container p {
         max-width: 85vw;
         margin: 5vh;
+    }
+
+    .user-post {
+        flex-wrap: wrap;
     }
 
 }

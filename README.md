@@ -1,5 +1,6 @@
 # TEAMWORK
-a quick and easy public bus transportation booking service in [Kisangani](https://fr.wikipedia.org/wiki/Kisangani) city
+Teamwork is an ​ internal social network for organizations’ employees. The goal of this
+application is to facilitate more interaction between colleagues and facilitate team bonding
 
 
 # Versioning
