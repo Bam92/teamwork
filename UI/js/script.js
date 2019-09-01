@@ -50,7 +50,7 @@ for (let i = 0; i < posts.length; i += 1) {
     imgElt.alt = 'illustration';
     divImg.className = 'post-illustration';
     postLink.className = 'post-detail';
-    postLink.textContent = 'Lire l\'article';
+    postLink.textContent = 'Read the article';
     postLink.href = './post.detail.html';
 
     divImg.appendChild(imgElt);
@@ -67,7 +67,6 @@ const randomPost = () => {
     return index;
 }
 
-console.log('Index is ', randomPost(), 'Post is ', posts[randomPost()], 'Test index ', randomPost())
 const artDetailContent = document.getElementsByClassName('post-content')[0]
 , titleDOM = document.getElementsByClassName('post-detail-title')[0]
 , imgDOM = document.querySelector('[post-detail-img]')
