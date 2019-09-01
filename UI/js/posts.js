@@ -30,5 +30,14 @@ const posts = [
         message: 'Lorem, ipsum <b>dolor sit amet </b>consectetur adipisicing elit. Deserunt esse quae libero odio totam facilis, officia maxime obcaecati ipsum ad vero similique natus quidem id excepturi fugit distinctio iste corporis!',
         date: '22 Aug 2019 07:28:00 GMT',
         author: 'Sarah'
+    },
+    {
+        id: 4,
+        img_url: '../images/posts/4.png',
+        title: 'How to Learn Something New ',
+        tags: ['school', 'study'],
+        message: 'To be successful today – in a world that is changing fast – we need to be able to consistently and efficiently adapt and grow. To achieve this we need to become a self-directed, lifelong learner. The key is discovering a love of learning. But learning doesn\’t just mean acquiring new knowledge. It\’s also about developing your skills, your attitudes, values, and your own way of being in the world.',
+        date: '25 Aug 2019 07:28:00 GMT',
+        author: 'Fidele'
     }
 ];
