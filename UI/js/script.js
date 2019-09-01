@@ -16,14 +16,11 @@ window.addEventListener('click', e => {
 });
 
 // posts.js file
-const articleDOM = document.getElementsByClassName('dash-main')[0]
-//, articleElt = document.createElement('article')
-;
+const articleDOM = document.getElementsByClassName('list-posts')[0];
 
 const createElt = (elt) => document.createElement(elt);
 
 for (let i = 0; i < posts.length; i += 1) {
-    // Creates elements
     const articleElt = createElt('article')
     , title = createElt('h3')
     , message = createElt('p')
@@ -34,9 +31,9 @@ for (let i = 0; i < posts.length; i += 1) {
     , imgElt = createElt('img')
     , divBloc = createElt('div') // contains all properties except img for purpose of flex style
     , divImg = createElt('div')
+    , postLink = createElt('a')
     ;
 
-    // Add properties and content
     divBloc.className = 'post-bloc';
     articleElt.className = 'user-post';
     title.textContent = posts[i].title;
@@ -52,11 +49,36 @@ for (let i = 0; i < posts.length; i += 1) {
     imgElt.src = posts[i].img_url;
     imgElt.alt = 'illustration';
     divImg.className = 'post-illustration';
+    postLink.className = 'post-detail';
+    postLink.textContent = 'Lire l\'article';
+    postLink.href = './post.detail.html';
 
     divImg.appendChild(imgElt);
     div.append(paraDate, paraAuthor);
 
     divBloc.append(title, tags, message, div);
-    articleElt.append(divImg, divBloc);
-    articleDOM.appendChild(articleElt);
+    articleElt.append(divImg, divBloc, postLink);
+
+    if (articleDOM) articleDOM.appendChild(articleElt);
 }
+
+const randomPost = () => {
+    const index = Math.floor(Math.random() * posts.length);
+    return index;
+}
+
+console.log('Index is ', randomPost(), 'Post is ', posts[randomPost()], 'Test index ', randomPost())
+const artDetailContent = document.getElementsByClassName('post-content')[0]
+, titleDOM = document.getElementsByClassName('post-detail-title')[0]
+, imgDOM = document.querySelector('[post-detail-img]')
+, authorDOM = document.querySelector('.author-name')
+, dateDOM = document.querySelector('.post-date')
+;
+
+const { title, message, img_url, date, author, tags } = posts[randomPost()];
+
+titleDOM.append(title);
+imgDOM.src = img_url;
+authorDOM.textContent = author;
+dateDOM.textContent = date;
+artDetailContent.innerHTML += message;
