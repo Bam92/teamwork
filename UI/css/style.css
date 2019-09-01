@@ -325,15 +325,19 @@ input[type=checkbox] {
    =======================================================================
 */
 .user-post {
+    width: 78vw;
     display: flex;
+    flex-wrap: wrap;
     background: #f5fcfe;
     padding: 2em;
     margin-bottom: 2em;
     border-radius: .5rem;
+}
+
+.user-post:hover {
     box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
                 0 4px 8px 0 rgba(17,22,26,.08), 
                 0 8px 16px 0 rgba(17,22,26,.08);
-    /*align-items: baseline;*/
 }
 
 .dash-body {
@@ -396,6 +400,77 @@ hr {
 .comment-form-bloc {
     width: 40vw;
     align-self: flex-start;
+}
+
+.del-art-btn {
+    cursor: pointer;
+    border-radius: .5em;
+    background-color: hsl(257, 40%, 49%);
+    padding: 1em;
+    color: #fff;
+    margin-left: 2em;
+    border: 1px solid hsl(257, 40%, 49%);
+}
+
+/* Delete article */
+.del-art-modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0, 0.4);
+}
+
+.del-art-modal-content {
+    background-color: #fefefe;
+    border-radius: .29em;
+    width: 28vw;
+    margin: 15em auto;
+    padding: 20px;
+    box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
+                0 4px 8px 0 rgba(17,22,26,.08), 
+                0 8px 16px 0 rgba(17,22,26,.08);
+}
+
+.del-art-modal-content p {
+    color: #000;
+}
+
+.del-response {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2em;
+  
+}
+
+.del-response button {
+    padding: 1em 2em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.del-response #cancel {
+    color: hsl(257, 40%, 49%);
+    background-color: white;
+    border: none;
+    margin-right: 5px;
+}
+
+.del-response #confirm {
+    color: white;
+    background-color: hsl(257, 40%, 49%);
+    border: none;
+}
+
+.del-response #cancel:hover,
+.del-response #confirm:hover {
+    box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
+    0 4px 8px 0 rgba(17,22,26,.08), 
+    0 8px 16px 0 rgba(17,22,26,.08);
 }
 
 /* =======================================================================

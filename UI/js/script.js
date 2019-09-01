@@ -16,7 +16,9 @@ window.addEventListener('click', e => {
 });
 
 // posts.js file
-const articleDOM = document.getElementsByClassName('list-posts')[0];
+const articleDOM = document.getElementsByClassName('list-posts')[0]
+, employeeArtDOM = document.querySelector('.my-posts')
+;
 
 const createElt = (elt) => document.createElement(elt);
 
@@ -32,6 +34,7 @@ for (let i = 0; i < posts.length; i += 1) {
     , divBloc = createElt('div') // contains all properties except img for purpose of flex style
     , divImg = createElt('div')
     , postLink = createElt('a')
+    , delBtn = createElt('button')
     ;
 
     divBloc.className = 'post-bloc';
@@ -52,12 +55,19 @@ for (let i = 0; i < posts.length; i += 1) {
     postLink.className = 'post-detail';
     postLink.textContent = 'Read the article';
     postLink.href = './post.detail.html';
+    delBtn.className = 'del-art-btn';
+    delBtn.textContent = 'Delete';
 
     divImg.appendChild(imgElt);
     div.append(paraDate, paraAuthor);
 
     divBloc.append(title, tags, message, div);
     articleElt.append(divImg, divBloc, postLink);
+
+    if (i < 2 && employeeArtDOM) {
+        articleElt.append(divImg, divBloc, postLink, delBtn);
+        employeeArtDOM.appendChild(articleElt);
+    }
 
     if (articleDOM) articleDOM.appendChild(articleElt);
 }
@@ -76,8 +86,25 @@ const artDetailContent = document.getElementsByClassName('post-content')[0]
 
 const { title, message, img_url, date, author, tags } = posts[randomPost()];
 
-titleDOM.append(title);
-imgDOM.src = img_url;
-authorDOM.textContent = author;
-dateDOM.textContent = date;
-artDetailContent.innerHTML += message;
+if (titleDOM) {
+    titleDOM.append(title);
+    imgDOM.src = img_url;
+    authorDOM.textContent = author;
+    dateDOM.textContent = date;
+    artDetailContent.innerHTML += message;
+}
+
+// Confirm deletion of article
+const delBtn = document.querySelectorAll('.del-art-btn')
+, delModal = document.querySelector('.del-art-modal')
+;
+
+for (let i = 0; i < delBtn.length; i += 1) {
+    delBtn[i].addEventListener('click', () => {
+        delModal.style.display = "block";
+    });
+}
+
+window.addEventListener('click', e => {
+    if (e.target === delModal) delModal.style.display = "none";
+});
