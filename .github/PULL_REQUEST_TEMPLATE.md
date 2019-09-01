@@ -9,5 +9,5 @@ After cloning this repo, cd into it and OPEN the `index.html` page with the brow
 #### Any background context you want to provide?
 The dashboard has not yet any content
 #### What are the relevant pivotal tracker stories?
-[#ID1](www.pt.rw), [#ID2](www.pt.rw)
+[#168236475](https://www.pivotaltracker.com/story/show/168236475)
 #### Screenshots (if appropriate)

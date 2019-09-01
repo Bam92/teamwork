@@ -2,17 +2,17 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../css/style.css">
   
-  <title>Teamate | Article detail</title>
+  <title>Teamate | Dashboard</title>
 </head>
 <body class="dash-body">
   <header class="dash-header">
-    <h1 class="logo padding-lt"><a href="./dashboard.html" title="Dashboard">Teamate</a></h1>
+    <h1 class="logo padding-lt"><a href="">Teamate</a></h1>
     <nav role="navigation" id="dash-last-child">
       
       <div id="admin-nav-bloc">
@@ -31,19 +31,14 @@
     </nav>
   </header>  
   <main role="main" class="dash-main">  
-    <h1 class="post-detail-title"></h1>
-    <div class="post-info">
-      <img src="../images/abel-profil.png" alt="author" class="author-img">
-      <div>
-        <span class="author-name"></span> <br>
-        <span class="post-date"></span>
-      </div>
-    </div>
-    <div class="post-detail-image">
-      <img alt="Article image" post-detail-img>
-    </div>
-    <article class="post-content">
-     
+    <article class="new-art-bloc">
+      <h1 class="new-art-title">Write down a story to share<br> with your teammates</h1>
+      <form class="new-art-form">
+        <input type="text" placeholder="What is the title of your story?">
+        <textarea name="art-description" id="" cols="30" rows="10">Today's story is about ...</textarea>
+        <input type="text" placeholder="What are the relevant tags?">
+        <input type="submit" value="Share your story">
+      </form>
     </article>
   </main>
   <footer class="dash-footer">

@@ -214,7 +214,8 @@ p {
 input[type=email], 
 input[type=password],
 input[type=submit],
-input[type=text] {
+input[type=text],
+textarea {
     width: 100%;
     border-radius: 5px;
     padding: .99em;
@@ -233,6 +234,10 @@ input[type=submit]:hover {
 
 input[type=checkbox] {    
     margin-bottom: .9em;
+}
+
+.new-art-bloc {
+    width: 40vw;
 }
 
 /* =======================================================================
@@ -279,7 +284,8 @@ input[type=checkbox] {
     margin: 0;
 }
 
-.dash-footer, .front-footer {
+.dash-footer, 
+.front-footer {
     display: flex;
     flex-wrap: wrap;
     color: #fff;
@@ -344,7 +350,8 @@ input[type=checkbox] {
     border-radius: 50%;
 }
 
-.post-illustration  img, .post-detail-image img {
+.post-illustration  img, 
+.post-detail-image img {
     width: 100%;
     height: 100%;
 }
@@ -353,7 +360,9 @@ input[type=checkbox] {
     border-radius: .5rem;
 }
 
-.post-detail-title, .post-info {
+.post-detail-title, 
+.post-info,
+.new-art-title {
     align-self: flex-start;
     color: #000;
 }
@@ -366,6 +375,7 @@ input[type=checkbox] {
 .post-content {
     margin: 3em 0;
 }
+
 /* =======================================================================
                          Responsive design
    =======================================================================
