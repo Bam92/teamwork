@@ -8,11 +8,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../css/style.css">
   
-  <title>Teamate | Dashboard</title>
+  <title>Teawork | My articles</title>
 </head>
 <body class="dash-body">
   <header class="dash-header">
-    <h1 class="logo padding-lt"><a href="">Teamate</a></h1>
+    <h1 class="logo padding-lt"><a href="./dashboard.html">teamwork</a></h1>
     <nav role="navigation" id="dash-last-child">
       
       <div id="admin-nav-bloc">
@@ -31,9 +31,18 @@
     </div>
     </nav>
   </header>  
-  <main role="main" class="dash-main list-posts">  
-    <p>Most recent posts</p>
+  <main role="main" class="dash-main my-posts">  
+    <p>My posts</p>
   </main>
+  <div id="myModal" class="del-art-modal">
+      <div class="modal-content del-art-modal-content">
+        <p>Delete the post?</p>
+        <div class="del-response">
+          <button id="cancel">Cancel</button>
+          <button id="confirm">Delete Post</button>
+        </div>
+      </div>
+    </div>
   <footer class="dash-footer">
     <p class="padding-lt">&copy Andela 2019</p>
     <div class="contact-info">
