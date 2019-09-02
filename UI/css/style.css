@@ -402,7 +402,8 @@ hr {
     align-self: flex-start;
 }
 
-.del-art-btn {
+.del-art-btn,
+.edit-art-btn {
     cursor: pointer;
     border-radius: .5em;
     background-color: hsl(257, 40%, 49%);
@@ -412,8 +413,9 @@ hr {
     border: 1px solid hsl(257, 40%, 49%);
 }
 
-/* Delete article */
-.del-art-modal {
+/* Delete & edit article */
+.del-art-modal,
+.edit-art-modal {
     display: none;
     position: fixed;
     z-index: 100;
@@ -425,15 +427,24 @@ hr {
     background-color: rgb(0, 0, 0, 0.4);
 }
 
-.del-art-modal-content {
+.del-art-modal-content,
+.edit-art-modal-content {
     background-color: #fefefe;
     border-radius: .29em;
-    width: 28vw;
-    margin: 15em auto;
     padding: 20px;
     box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
                 0 4px 8px 0 rgba(17,22,26,.08), 
                 0 8px 16px 0 rgba(17,22,26,.08);
+}
+
+.del-art-modal-content {
+    width: 28vw;
+    margin: 15em auto;
+}
+
+.edit-art-modal-content {
+    width: 45vw;
+    margin: 2em auto;
 }
 
 .del-art-modal-content p {
