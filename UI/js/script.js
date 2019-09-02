@@ -18,6 +18,7 @@ window.addEventListener('click', e => {
 // posts.js file
 const articleDOM = document.getElementsByClassName('list-posts')[0]
 , employeeArtDOM = document.querySelector('.my-posts')
+, editFormDOM = document.querySelector('.edit-art-form')
 ;
 
 const createElt = (elt) => document.createElement(elt);
@@ -35,6 +36,7 @@ for (let i = 0; i < posts.length; i += 1) {
     , divImg = createElt('div')
     , postLink = createElt('a')
     , delBtn = createElt('button')
+    , editBtn = createElt('button')
     ;
 
     divBloc.className = 'post-bloc';
@@ -57,6 +59,8 @@ for (let i = 0; i < posts.length; i += 1) {
     postLink.href = './post.detail.html';
     delBtn.className = 'del-art-btn';
     delBtn.textContent = 'Delete';
+    editBtn.className = 'edit-art-btn';
+    editBtn.textContent = 'Edit';
 
     divImg.appendChild(imgElt);
     div.append(paraDate, paraAuthor);
@@ -65,7 +69,7 @@ for (let i = 0; i < posts.length; i += 1) {
     articleElt.append(divImg, divBloc, postLink);
 
     if (i < 2 && employeeArtDOM) {
-        articleElt.append(divImg, divBloc, postLink, delBtn);
+        articleElt.append(divImg, divBloc, postLink, delBtn, editBtn);
         employeeArtDOM.appendChild(articleElt);
     }
 
@@ -106,5 +110,30 @@ for (let i = 0; i < delBtn.length; i += 1) {
 }
 
 window.addEventListener('click', e => {
-    if (e.target === delModal) delModal.style.display = "none";
+    if (e.target === delModal) delModal.style.display = 'none';
 });
+
+// Edit aticle
+const editBtn = document.querySelectorAll('.edit-art-btn')
+, editModal = document.querySelector('.edit-art-modal')
+, formTitle = document.querySelector('#edit-title')
+, formDescription = document.querySelector('[name=art-description]')
+, formTags = document.querySelector('#edit-tags')
+;
+
+if (editFormDOM) {
+    formTitle.value = title;
+    formDescription.textContent = message;
+    formTags.value = tags;
+}
+
+for (let i = 0; i < editBtn.length; i += 1) {
+    editBtn[i].addEventListener('click', () => {
+        editModal.style.display = 'block';
+    });
+}
+
+window.addEventListener('click', e => {
+    if (e.target === editModal) editModal.style.display = 'none';
+});
+
