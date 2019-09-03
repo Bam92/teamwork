@@ -1,0 +1,48 @@
+{
+  "name": "teamwork",
+  "version": "1.0.0",
+  "description": "Teamwork is an ​ internal social network for organizations’ employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding",
+  "main": "server/src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel server/src -d server/dist",
+    "start": "yarn build && nodemon server/dist/app.js",
+    "serve": "yarn build && node server/dist/app.js",
+    "dev": "DEBUG=app nodemon node server/dist/app.js",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bam92/teamwork.git"
+  },
+  "author": "Abel Lifaefi Mbula",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bam92/teamwork/issues"
+  },
+  "homepage": "https://github.com/Bam92/teamwork#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "eslint": "^6.3.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_moduels"
+    ],
+    "delay": "2500"
+  }
+}
