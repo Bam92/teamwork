@@ -2,13 +2,13 @@
   "name": "teamwork",
   "version": "1.0.0",
   "description": "Teamwork is an ​ internal social network for organizations’ employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding",
-  "main": "src/app.js",
+  "main": "server/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d dist",
-    "start": "yarn build && nodemon dist/app.js",
-    "serve": "yarn build && node dist/app.js",
-    "dev": "DEBUG=app nodemon node dist/app.js",
+    "build": "babel server/src -d server/dist",
+    "start": "yarn build && nodemon server/dist/app.js",
+    "serve": "yarn build && node server/dist/app.js",
+    "dev": "DEBUG=app nodemon node server/dist/app.js",
     "lint": "eslint"
   },
   "repository": {
@@ -22,9 +22,12 @@
   },
   "homepage": "https://github.com/Bam92/teamwork#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1"
   },
