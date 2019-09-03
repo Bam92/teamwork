@@ -1,5 +1,5 @@
-/*import "babel-polyfill";
-import './app';*/
+import "babel-polyfill";
+import './app';
 import express from 'express';
 import bodyParser from 'body-parser';
 import chalk from 'chalk';
