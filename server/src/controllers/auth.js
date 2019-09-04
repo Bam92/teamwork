@@ -6,9 +6,9 @@ const Auth = {
    * Create a new Employee
    * @param {object} req
    * @param {object} res
-   * @returns {object} user object
+   * @returns {object} Employee object
    */
-  signup(req, res) {
+  async signup(req, res) {
     let success = false;
     let status = 400;
 
@@ -30,7 +30,6 @@ const Auth = {
 
     employee_db.push(data)
 
-    //console.log('employee: ', employee_db)
     data.token = token(email);
     delete data.password;
 
