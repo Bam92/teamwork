@@ -23,7 +23,7 @@ import { getOne as employee } from '../models/employee';
 
       const getEmployee = employee(decoded.email);
 
-      if (!employee) return res.status(status).json({ status, error: 'Invalid token provided' });
+      if (!getEmployee) return res.status(status).json({ status, error: 'Invalid token provided' });
 
       req.currentEmployee = getEmployee;
 
