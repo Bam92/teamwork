@@ -1,8 +1,4 @@
-/**
-* @api {post} /api/v1/ Employee signup
-* @api {post} /api/v1/ Sign in an employee
-* @apiPermission user
-*
+/***
 * @apiParam  {String} [email] Email
 * @apiParam  {String} [firstaName] First name
 * @apiParam  {String} [lastName] Last name
@@ -14,11 +10,11 @@
 
 import express from 'express';
 
-import controller from '../controllers/auth';
+import verifyToken from '../middlewares/verifyToken';
+import controller from '../controllers/articles';
 
 const router = express.Router();
 
-router.post('/signup', controller.signup);
-router.post('/signin', controller.signin);
+router.get('/feeds', verifyToken, controller.getArticles);
 
 export default router;

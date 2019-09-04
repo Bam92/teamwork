@@ -8,6 +8,7 @@ import morgan from 'morgan';
 
 
 import auth from './routes/auth';
+import articles from './routes/articles';
 
 const app = express();
 
@@ -25,6 +26,7 @@ const baseUrl = '/api/v1';
 
 //  / ROUTES ///
 app.use(`${baseUrl}/auth`, auth);
+app.use(baseUrl, articles);
 
 const port = process.env.PORT || 3000;
 
