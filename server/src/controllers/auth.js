@@ -28,7 +28,8 @@ const Auth = {
      success = true;
      status = 201;
 
-    employee_db.push(data)
+     data._id = employee_db.length +1;
+     employee_db.push(data)
 
     data.token = token(email);
     delete data.password;
@@ -62,7 +63,8 @@ const Auth = {
       status = 200;
       const data = getOne(email);
 
-    console.log('employee: ', getOne(email))
+      console.log('get usr', getOne(email))
+
     data.token = token(email);
     delete data.password;
 

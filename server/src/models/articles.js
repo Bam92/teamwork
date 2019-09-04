@@ -22,12 +22,13 @@ const articles_db = [
   }
 ];
 
-// const getOne = email => {
-//   return articles_db.find( employee => employee.email === email )
-// }
+const getOne = title => {
+  return articles_db.find( article => article.title === title )
+}
 
 const getAll = () => {
   const sortedArticles =  articles_db.slice().sort((a, b) => b.createdOn - a.createdOn);
-  return sortedArticles; }
+  return sortedArticles;
+}
 
-export { articles_db, getAll };
+export { articles_db, getAll, getOne };
