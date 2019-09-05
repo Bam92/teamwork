@@ -17,5 +17,6 @@ const router = express.Router();
 
 router.get('/feeds', verifyToken, controller.getArticles);
 router.post('/articles', verifyToken, controller.createArticle);
+router.patch('/articles/:id', verifyToken, controller.updateArticle);
 
 export default router;

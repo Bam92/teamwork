@@ -26,9 +26,13 @@ const getOne = title => {
   return articles_db.find( article => article.title === title )
 }
 
+const getById = id => {
+  return articles_db.find( article => article._id === parseInt(id) )
+}
+
 const getAll = () => {
   const sortedArticles =  articles_db.slice().sort((a, b) => b.createdOn - a.createdOn);
   return sortedArticles;
 }
 
-export { articles_db, getAll, getOne };
+export { articles_db, getAll, getOne, getById };
