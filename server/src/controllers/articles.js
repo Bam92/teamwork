@@ -1,4 +1,5 @@
 import { articles_db, getAll, getOne, getById } from '../models/articles';
+import article_lastId from '../helpers/ids';
 
 const Article = {
   /**
@@ -29,13 +30,13 @@ const Article = {
       status = 201;
 
       const data = {
-        _id: articles_db.length + 1,
+        _id: article_lastId + 1,
         createdOn: new Date(),
         title,
         article,
         authorId: req.currentEmployee._id
       };
-
+     // article_lastId = article_lastId + 1;
     articles_db.push(data)
 
     return res.status(status).json({ status, success, message: 'Article successfully created', data });
@@ -79,6 +80,31 @@ const Article = {
     } else {
       return res.status(status).json({ status, success, error: 'title or article field not provided' });
     }
+
+  },
+
+  async deleteArticle(req, res) {
+    let success = true;
+    let  status = 200;
+    const id = req.params.id;
+
+    if (isNaN(id)) return res.status(status).json({ status, success, error: 'id must be a number' });
+   
+    const targetArt = getById(id)
+    , indexArt = articles_db.indexOf(targetArt)
+    ;
+
+    if (!targetArt) {
+      success = false;
+      status = 404;
+      return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
+    }
+
+   articles_db.splice([indexArt],1);
+  
+  console.log('db',  articles_db.length, articles_db)
+return res.status(status).json({ status, success, message: 'article successfully deleted' });
+
 
   }
 };
