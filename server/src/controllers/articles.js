@@ -30,7 +30,7 @@ const Article = {
       status = 201;
 
       const data = {
-        _id: article_lastId + 1,
+        _id: article_db.length + 1,
         createdOn: new Date(),
         title,
         article,
@@ -57,7 +57,7 @@ const Article = {
     const { title, article } = req.body;
 
     if (isNaN(id)) return res.status(status).json({ status, success, error: 'id must be a number' });
-    
+
     if (!getById(id)) {
       status = 404;
       return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
@@ -89,7 +89,7 @@ const Article = {
     const id = req.params.id;
 
     if (isNaN(id)) return res.status(status).json({ status, success, error: 'id must be a number' });
-   
+
     const targetArt = getById(id)
     , indexArt = articles_db.indexOf(targetArt)
     ;
@@ -101,11 +101,45 @@ const Article = {
     }
 
    articles_db.splice([indexArt],1);
-  
+
   console.log('db',  articles_db.length, articles_db)
 return res.status(status).json({ status, success, message: 'article successfully deleted' });
 
 
+  },
+
+  async addComment(req, res) {
+    let success = true;
+    let  status = 201;
+    const { id } = req.params;
+
+    if (isNaN(id)) {
+      success = false;
+      status = 400;
+
+      return res.status(status).json({ status, success, error: 'id must be an integer' });
+    }
+
+    const targetArt = getById(id);
+
+    if (!targetArt) {
+      success = false;
+      status = 404;
+      return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
+    }
+
+    const { title, article } = targetArt;
+    const { comment } = req.body;
+
+    if (!comment) {
+      success = false;
+      status = 400;
+      return res.status(status).json({ status, success, error: 'comment field is required' });
+    }
+
+    const data = { createdOn: new Date() + 1, articleTitle: title, article, comment };
+
+    return res.status(status).json({ status, success, message: 'comment successfully added', data });
   }
 };
 
