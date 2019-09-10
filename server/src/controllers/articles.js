@@ -1,4 +1,4 @@
-import { articles_db, getAll, getOne, getById } from '../models/articles';
+import { articles_db, comments_db, getAll, getOne, getById, getCommentsByArticleId } from '../models/articles';
 import article_lastId from '../helpers/ids';
 
 const Article = {
@@ -130,6 +130,11 @@ return res.status(status).json({ status, success, message: 'article successfully
 
     const { title, article } = targetArt;
     const { comment } = req.body;
+    const saveComment = { _id: comments_db.length + 1, createdOn: new Date(), articleId: id, authorId: req.currentEmployee._id, comment};
+
+    comments_db.push(saveComment);
+
+    console.log(getCommentsByArticleId(1), 'comments')
 
     if (!comment) {
       success = false;
@@ -140,6 +145,39 @@ return res.status(status).json({ status, success, message: 'article successfully
     const data = { createdOn: new Date() + 1, articleTitle: title, article, comment };
 
     return res.status(status).json({ status, success, message: 'comment successfully added', data });
+  },
+
+  async getArticle(req, res) {
+    let success = true;
+    let  status = 201;
+    const { id } = req.params;
+
+    if (isNaN(id)) {
+      success = false;
+      status = 400;
+
+      return res.status(status).json({ status, success, error: 'id must be an integer' });
+    }
+
+    const targetArt = getById(id);
+
+    if (!targetArt) {
+      success = false;
+      status = 404;
+      return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
+    }
+
+    const comments = getCommentsByArticleId(id)
+
+    delete targetArt._id
+
+    const data = targetArt;
+
+    data.comments = comments;
+
+    // console.log('comment for an article', getCommentsByArticleId(1))
+
+    return res.status(status).json({ status, success, message: `all detail of article: ${id}`, data });
   }
 };
 

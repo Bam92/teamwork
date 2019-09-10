@@ -20,5 +20,6 @@ router.post('/articles', verifyToken, controller.createArticle);
 router.patch('/articles/:id', verifyToken, controller.updateArticle);
 router.delete('/articles/:id', verifyToken, controller.deleteArticle);
 router.post('/articles/:id/comments', verifyToken, controller.addComment);
+router.get('/articles/:id', verifyToken, controller.getArticle);
 
 export default router;
