@@ -6,7 +6,7 @@ const modal = document.getElementById('modal')
 bars.addEventListener('click', () => {
     modal.style.display = "block";
 });
-    
+
 closeBtn.addEventListener('click', () => {
     modal.style.display = "none";
 });
@@ -23,11 +23,15 @@ const articleDOM = document.getElementsByClassName('list-posts')[0]
 
 const createElt = (elt) => document.createElement(elt);
 
+const sortedPosts = posts.slice().sort((a, b) => b.date - a.date)
+
 for (let i = 0; i < posts.length; i += 1) {
+  const { message, tags, date, author, title, img_url } = sortedPosts[i];
+
     const articleElt = createElt('article')
-    , title = createElt('h3')
-    , message = createElt('p')
-    , tags = createElt('span')
+    , titleElt = createElt('h2')
+    , messageElt = createElt('p')
+    , tagsElt = createElt('p')
     , div = createElt('div')
     , paraDate = createElt('p')
     , paraAuthor = createElt('p')
@@ -37,39 +41,49 @@ for (let i = 0; i < posts.length; i += 1) {
     , postLink = createElt('a')
     , delBtn = createElt('button')
     , editBtn = createElt('button')
+    , barsElt = createElt('i')
     ;
 
     divBloc.className = 'post-bloc';
     articleElt.className = 'user-post';
-    title.textContent = posts[i].title;
-    title.className = 'post-title';
-    message.textContent = posts[i].message.slice(0, 65);
-    message.className = 'post-description';
-    tags.textContent = posts[i].tags;
-    tags.className = 'post-tags';
-    paraDate.textContent = posts[i].date;
+    // title.textContent = posts[i].title;
+    titleElt.className = 'post-title';
+    messageElt.innerHTML = message.slice(0, 115);
+    messageElt.className = 'post-description';
+    tagsElt.textContent = tags.join('  ');
+    tagsElt.className = 'post-tags';
+    paraDate.textContent = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     paraDate.className = 'post-date';
-    paraAuthor.textContent = posts[i].author;
+    paraAuthor.textContent = author;
     paraAuthor.className = 'post-author';
-    imgElt.src = posts[i].img_url;
+    imgElt.src = img_url;
     imgElt.alt = 'illustration';
     divImg.className = 'post-illustration';
-    postLink.className = 'post-detail';
-    postLink.textContent = 'Read the article';
+    // postLink.className = 'post-detail';
+    postLink.textContent = title;
     postLink.href = './post.detail.html';
     delBtn.className = 'del-art-btn';
     delBtn.textContent = 'Delete';
     editBtn.className = 'edit-art-btn';
     editBtn.textContent = 'Edit';
+    div.className = 'list-post-info';
+    barsElt.className = 'fa fa-bars';
+    barsElt.id = 'dash-art-actions';
+
 
     divImg.appendChild(imgElt);
-    div.append(paraDate, paraAuthor);
+    div.append(paraDate, tagsElt, paraAuthor);
+    titleElt.appendChild(postLink);
+    imgElt.appendChild(postLink);
 
-    divBloc.append(title, tags, message, div);
-    articleElt.append(divImg, divBloc, postLink);
+    console.log('postlink', titleElt.appendChild(postLink));
+
+    divBloc.append(titleElt, div, messageElt);
+    articleElt.append(divImg, divBloc);
 
     if (i < 2 && employeeArtDOM) {
-        articleElt.append(divImg, divBloc, postLink, delBtn, editBtn);
+        console.log('postlink', titleElt.appendChild(postLink));
+        articleElt.append(divImg, divBloc, delBtn, editBtn);
         employeeArtDOM.appendChild(articleElt);
     }
 
@@ -137,3 +151,13 @@ window.addEventListener('click', e => {
     if (e.target === editModal) editModal.style.display = 'none';
 });
 
+// Scroll header
+const header = document.querySelector('header');
+const sticky = header.offsetTop;
+
+const checkHeader = () => {
+  if (window.pageYOffset > sticky) header.classList.add('sticky');
+  else header.classList.remove('sticky');
+}
+
+window.addEventListener('scroll', checkHeader);

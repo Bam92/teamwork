@@ -44,7 +44,7 @@ header,
     display: flex;
 }
 
-header, 
+header,
 h1 {
     font-family: var(--headings-font);
 }
@@ -57,6 +57,12 @@ header {
 #logo,
 #bars {
     font-size: 1.5em;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
 }
 
 #main-nav {
@@ -76,13 +82,10 @@ header {
 /*=====modal menu=======
 */
 
-#modal {
-    display: none;
+#modal .modal-content {
     position: fixed;
-    z-index: 100;
     border-radius: 4px;
     color: #090909;
-    /*height: 100%;*/
     width: 20vw;
     right: 10px;
     top: 12px;
@@ -90,17 +93,25 @@ header {
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.051);
     transform-origin: 50% 10%;
     overflow: hidden;
-    padding-right: 2em;
-    padding-top: 2em;
+    padding: 2em;
 }
 
+#dash-art-actions {
+  position: fixed;
+  top: 2em;
+  right: 1.4em;
+}
 .close {
     color: #aaaaaa;
     float: right;
-    font-size: 28px;
+    font-size: 2em;
     font-weight: bold;
+    position: fixed;
+    top: 1.2em;
+    right:  1.7em;
+    z-index: 101;
   }
-  
+
   .close:hover,
   .close:focus,
   #bars {
@@ -151,10 +162,10 @@ p {
 }
 
 #social-container {
-    display: flex;
-    /*align-self: flex-end;*/
+  display: flex;
+  justify-content: center;
 }
-  
+
 .social {
     border: 0.05em solid #fff;
     border-radius: 50%;
@@ -195,11 +206,12 @@ p {
    =======================================================================
 */
 
-.auth-main, .dash-main {
+.auth-main,
+.dash-main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 70vh;
+    min-height: 60vh;
 }
 
 #form-wrapper {
@@ -211,7 +223,7 @@ p {
     width: 30vw;
 }
 
-input[type=email], 
+input[type=email],
 input[type=password],
 input[type=submit],
 input[type=text],
@@ -240,7 +252,7 @@ input[type=submit]:hover {
     background-color: var(--main-bg-color);
 }
 
-input[type=checkbox] {    
+input[type=checkbox] {
     margin-bottom: .9em;
 }
 
@@ -285,6 +297,10 @@ input[type=checkbox] {
     color: #000;
 }
 
+.dash-footer p {
+  margin: 1em;
+}
+
 .dash-footer {
     background-color: var(--main-bg-color);
     position: absolute;
@@ -292,7 +308,7 @@ input[type=checkbox] {
     margin: 0;
 }
 
-.dash-footer, 
+.dash-footer,
 .front-footer {
     display: flex;
     flex-wrap: wrap;
@@ -301,13 +317,18 @@ input[type=checkbox] {
     align-items: baseline;
 }
 
+.front-footer {
+  margin-top: 5%;
+}
+
 .social:hover {
     color: #fff;
 }
+
 #twitter:hover {
     background-color: #38A1F3;
     border: 1px solid #38A1F3;
-    
+
 }
 
 #facebook:hover {
@@ -324,30 +345,59 @@ input[type=checkbox] {
                          Employees posts styles
    =======================================================================
 */
+.list-posts,
+.my-posts {
+  display: flex;
+  width: 80vw;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.list-post-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 .user-post {
-    width: 78vw;
+    width: 38vw;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    background: #f5fcfe;
-    padding: 2em;
-    margin-bottom: 2em;
+    background-color: #fff;
+    margin-bottom: 3.5em;
     border-radius: .5rem;
+    transition: all .2s ease-in-out;
+
 }
 
 .user-post:hover {
-    box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
-                0 4px 8px 0 rgba(17,22,26,.08), 
+    box-shadow: 0 0 8px 0 rgba(17,22,26,.16),
+                0 4px 8px 0 rgba(17,22,26,.08),
                 0 8px 16px 0 rgba(17,22,26,.08);
 }
+
+.list-posts-title,
+.post-title a {
+  color: #000;
+}
+
+.post-title a {
+  font-weight: 800;
+}
+
+
 
 .dash-body {
     background-color: rgb(250, 251, 252);
 }
 
 .post-illustration {
-    width: 35%;
-    height: 100%;
-    margin-right: 2em;
+    width: 38vw;
+    height: 35%;
+}
+
+.post-bloc {
+  padding: 2.5em;
 }
 
 .post-detail-image {
@@ -362,17 +412,18 @@ input[type=checkbox] {
     border-radius: 50%;
 }
 
-.post-illustration  img, 
+.post-illustration  img,
 .post-detail-image img {
     width: 100%;
     height: 100%;
 }
 
 .post-illustration  img {
-    border-radius: .5rem;
+    border-radius: .5rem .5rem 0 0;
+
 }
 
-.post-detail-title, 
+.post-detail-title,
 .post-info,
 .new-art-title {
     align-self: flex-start;
@@ -385,7 +436,7 @@ input[type=checkbox] {
 }
 
 .post-content {
-    margin: 3em 0;
+    margin: 2em 0;
 }
 
 hr {
@@ -404,18 +455,19 @@ hr {
 
 .del-art-btn,
 .edit-art-btn {
+  text-transform: uppercase;
     cursor: pointer;
-    border-radius: .5em;
     background-color: hsl(257, 40%, 49%);
     padding: 1em;
     color: #fff;
-    margin-left: 2em;
+    margin-bottom: 1.5em;
     border: 1px solid hsl(257, 40%, 49%);
 }
 
 /* Delete & edit article */
 .del-art-modal,
-.edit-art-modal {
+.edit-art-modal,
+#modal {
     display: none;
     position: fixed;
     z-index: 100;
@@ -432,8 +484,8 @@ hr {
     background-color: #fefefe;
     border-radius: .29em;
     padding: 20px;
-    box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
-                0 4px 8px 0 rgba(17,22,26,.08), 
+    box-shadow: 0 0 8px 0 rgba(17,22,26,.16),
+                0 4px 8px 0 rgba(17,22,26,.08),
                 0 8px 16px 0 rgba(17,22,26,.08);
 }
 
@@ -455,14 +507,24 @@ hr {
     display: flex;
     justify-content: flex-end;
     margin-top: 2em;
-  
+
+}
+
+#dash-art-actions {
+  color: red;
+
+}
+
+.list-post-info,
+.del-response button {
+  text-transform: uppercase;
 }
 
 .del-response button {
-    padding: 1em 2em;
-    text-transform: uppercase;
-    cursor: pointer;
+  padding: 1em 2em;
+  cursor: pointer;
 }
+
 
 .del-response #cancel {
     color: hsl(257, 40%, 49%);
@@ -479,8 +541,8 @@ hr {
 
 .del-response #cancel:hover,
 .del-response #confirm:hover {
-    box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 
-    0 4px 8px 0 rgba(17,22,26,.08), 
+    box-shadow: 0 0 8px 0 rgba(17,22,26,.16),
+    0 4px 8px 0 rgba(17,22,26,.08),
     0 8px 16px 0 rgba(17,22,26,.08);
 }
 
@@ -490,7 +552,7 @@ hr {
 */
 
 /* 850px */
-@media screen and (max-width: 53.125em) { 
+@media screen and (max-width: 53.125em) {
     body {
         background-image: url("../images/bg-mobile.svg");
         background-size: 100%;
@@ -504,7 +566,7 @@ hr {
         width: 43%;
         padding: 5% 0;
     }
-    
+
     .logo {
         width: 43%;
         padding: 5% 0;
@@ -516,18 +578,12 @@ hr {
         margin: 5% auto;
         width: 78%;
     }
-    
+
     p {
         font-weight: 400;
         margin: 5% auto;
         width: 85%;
         font-size: 1em;
-    }
-    
-    main {
-        flex-direction: column;
-        align-content: center;
-        text-align: center;
     }
 
     #img-container {
@@ -545,13 +601,7 @@ hr {
         font-size: 0.9em;
         padding: 1rem;
       }
-    
-    #social-container {
-        margin: 5vh 0;
-        justify-content: center;
-        align-self: center;   
-    }
-    
+
     .attribution {
         width: 100%;
         text-align: center;
@@ -579,7 +629,7 @@ hr {
 }
 
 /* 1000px */
-@media screen and (min-width: 53.125em) and (max-width: 62.500em) { 
+@media screen and (min-width: 53.125em) and (max-width: 62.500em) {
     body {
         background-image: url("../images/bg-mobile.svg");
     }
@@ -588,21 +638,21 @@ hr {
         justify-content: space-between;
         padding: 2vh 2% 0 3%;
     }
-    
+
     h1 {
         font-weight: 700;
         font-size: 1.5em;
         margin: 5% auto;
         width: 78%;
     }
-    
+
     p {
         font-weight: 400;
         margin: 5% auto;
         width: 85%;
         font-size: 1em;
       }
-    
+
     #logo-container {
         max-height: 15vh;
         margin-bottom: 3vh;
@@ -610,11 +660,6 @@ hr {
 
     #logo {
         width: 20vw;
-    }
-    
-    main {
-        flex-direction: column;
-        align-items: center;
     }
 
     #img-container img {
@@ -625,13 +670,7 @@ hr {
         font-size: 18px;
         padding: 1em 5.5em;
       }
-    
-    #social-container {
-        margin: 5vh auto;
-        justify-content: space-between;
-        width: 25vw;   
-    }
-    
+
     #txt-container {
        text-align: center;
     }
