@@ -128,7 +128,9 @@ header {
 
 main {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 2.5%;
+    flex: 1 0 auto;
 }
 
 #img-container img {
@@ -315,10 +317,7 @@ input[type=checkbox] {
     color: #fff;
     justify-content: space-between;
     align-items: baseline;
-}
-
-.front-footer {
-  margin-top: 5%;
+    flex-shrink: 0;
 }
 
 .social:hover {
@@ -510,11 +509,6 @@ hr {
 
 }
 
-#dash-art-actions {
-  color: red;
-
-}
-
 .list-post-info,
 .del-response button {
   text-transform: uppercase;
@@ -553,38 +547,42 @@ hr {
 
 /* 850px */
 @media screen and (max-width: 53.125em) {
-    body {
-        background-image: url("../images/bg-mobile.svg");
-        background-size: 100%;
-    }
 
-    #container {
-        align-items: center;
-    }
+  body {
+    background-image: url("../images/bg-mobile.svg");
+    background-size: 100%;
+  }
 
-    #logo {
-        width: 43%;
-        padding: 5% 0;
-    }
+  main {
+    text-align: center;
+  }
 
-    .logo {
-        width: 43%;
-        padding: 5% 0;
-    }
+  #txt-container p {
+    margin: auto;
+  }
+
+  #container {
+    align-items: center;
+  }
+
+  #logo {
+    width: 43%;
+  }
+
+  .logo {
+    width: 43%;
+  }
 
     h1 {
-        font-weight: 700;
-        font-size: 1.5em;
-        margin: 5% auto;
-        width: 78%;
-    }
+      font-weight: 700;
+      font-size: 1.5em;
+  }
 
-    p {
-        font-weight: 400;
-        margin: 5% auto;
-        width: 85%;
-        font-size: 1em;
-    }
+  p {
+      font-weight: 400;
+      width: 85%;
+      font-size: 1em;
+  }
 
     #img-container {
         margin: 12% 0 10%;
@@ -625,6 +623,46 @@ hr {
     .user-post {
         flex-wrap: wrap;
     }
+
+    #modal .modal-content {
+      width: 95vw;
+    }
+
+  .post-illustration,
+  .user-post {
+    width: 100vw;
+  }
+
+  .post-bloc {
+    padding: 0;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.post-description {
+  margin: auto;
+}
+
+.dash-main {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.padding-rt,
+#social-container {
+  margin: auto;
+}
+
+.edit-art-modal-content,
+.del-art-modal-content,
+.new-art-bloc  {
+  width: 100vw;
+}
+
+.edit-art-modal-content,
+.del-art-modal-content {
+  margin: 14em 0;
+}
 
 }
 
