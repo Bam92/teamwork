@@ -1,4 +1,7 @@
 # TEAMWORK
+https://travis-ci.com/Bam92/teamwork.svg?branch=develop
+[![Coverage Status](https://coveralls.io/repos/github/Bam92/teamwork/badge.svg?branch=develop)](https://coveralls.io/github/Bam92/teamwork?branch=develop)
+
 Teamwork is an ​ internal social network for organizations’ employees. The goal of this
 application is to facilitate more interaction between colleagues and facilitate team bonding
 

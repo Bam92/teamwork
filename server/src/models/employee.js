@@ -4,7 +4,7 @@ const employee_db = [
     firstName: 'Sarah',
      lastName: 'Lifaefi',
      email: 'sarah.lif@gmail.com',
-     password: 'S@ra123',
+     password: 'S@rah123',
      gender: 'female',
      jobRole: 'employee',
      department:'talent',

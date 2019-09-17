@@ -17,7 +17,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('tiny'));
 
-
 app.post('/', (req, res) => {
   return res.status(200).send('Welcome! The server is working properly');
 })
@@ -33,3 +32,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`The server is listning on port ${chalk.green(port)}`);
 });
+
+export default app;

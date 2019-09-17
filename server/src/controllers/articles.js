@@ -1,5 +1,6 @@
 import { articles_db, comments_db, getAll, getOne, getById, getCommentsByArticleId } from '../models/articles';
 import article_lastId from '../helpers/ids';
+import cheke from 'cheke';
 
 const Article = {
   /**
@@ -24,13 +25,12 @@ const Article = {
    const { title, article } = req.body;
 
    if (title && article) {
-
     if (getOne(title) === undefined) {
       success = true;
       status = 201;
 
       const data = {
-        _id: article_db.length + 1,
+        _id: articles_db.length + 1,
         createdOn: new Date(),
         title,
         article,
@@ -41,18 +41,18 @@ const Article = {
 
     return res.status(status).json({ status, success, message: 'Article successfully created', data });
   } else {
+    status = 409;
     return res.status(status).json({ status, success, error: 'Article already exists. Try again with another title' });
   }
    } else {
      return res.status(status).json({ status, success, error: 'title or article field not provided' });
    }
-
   },
 
   async updateArticle(req, res) {
     let success = false;
     let  status = 400;
-    const id = req.params.id;
+    const { id } = req.params;
 
     const { title, article } = req.body;
 
@@ -64,19 +64,23 @@ const Article = {
     }
 
     if (title || article) {
-      success = true;
-      status = 201;
 
-      const data = articles_db.filter(art => art._id === parseInt(id)).map(art => {
-      art.updatedOn = new Date();
-      if (title) art.title = title;
-      if (article) art.article = article;
+      // if (title.length > 0 || article.length > 0) {
+        success = true;
+        status = 201;
 
-      return art;
-    });
+        const data = articles_db.filter(art => art._id === parseInt(id)).map(art => {
+        art.updatedOn = new Date();
+
+        if (title) art.title = title;
+        if (article) art.article = article;
+
+        return art;
+      });
 
       return res.status(status).json({ status, success, message: 'article successfully edited', data });
 
+      // } else return res.status(status).json({ status, success, error: 'field must not be empty'});
     } else {
       return res.status(status).json({ status, success, error: 'title or article field not provided' });
     }
@@ -86,9 +90,9 @@ const Article = {
   async deleteArticle(req, res) {
     let success = true;
     let  status = 200;
-    const id = req.params.id;
+    const { id } = req.params;
 
-    if (isNaN(id)) return res.status(status).json({ status, success, error: 'id must be a number' });
+    if (isNaN(id)) return res.status(400).json({ status: 400, success: false, error: 'id must be a number' });
 
     const targetArt = getById(id)
     , indexArt = articles_db.indexOf(targetArt)
@@ -130,7 +134,7 @@ return res.status(status).json({ status, success, message: 'article successfully
 
     const { title, article } = targetArt;
     const { comment } = req.body;
-    const saveComment = { _id: comments_db.length + 1, createdOn: new Date(), articleId: id, authorId: req.currentEmployee._id, comment};
+    const saveComment = { _id: comments_db.length + 1, createdOn: new Date(), articleId: id, authorId: req.currentEmployee._id, comment };
 
     comments_db.push(saveComment);
 
@@ -140,6 +144,13 @@ return res.status(status).json({ status, success, message: 'article successfully
       success = false;
       status = 400;
       return res.status(status).json({ status, success, error: 'comment field is required' });
+    }
+
+    if (comment.length <= 0) {
+    console.log('Length: ', comment.length)
+      success = false;
+      status = 400;
+      return res.status(status).json({ status, success, error: 'comment is empty' });
     }
 
     const data = { createdOn: new Date() + 1, articleTitle: title, article, comment };
