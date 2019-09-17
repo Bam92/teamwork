@@ -4,12 +4,13 @@
   "description": "Teamwork is an ​ internal social network for organizations’ employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding",
   "main": "server/src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel server/src -d server/dist",
     "start": "yarn build && nodemon server/dist/app.js",
     "serve": "yarn build && node server/dist/app.js",
     "dev": "DEBUG=app nodemon node server/dist/app.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "mocha --require @babel/register server/test/*  --exit",
+    "coverage": "nyc yarn test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,9 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.19.0",
+    "chai-http": "^4.3.0",
     "chalk": "^2.4.2",
+    "cheke": "^1.0.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
@@ -36,7 +39,12 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "eslint": "^6.3.0"
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.6",
+    "eslint": "^6.3.0",
+    "mocha": "^6.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^14.1.1"
   },
   "nodemonConfig": {
     "restartable": "rs",
