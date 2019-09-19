@@ -1,5 +1,7 @@
 import { employee_db, getOne } from '../models/employee';
 import token from '../helpers/getToken';
+import hash from '../helpers/hashPassword';
+import checkPassword from '../helpers/checkPassword';
 
 const Auth = {
   /**
@@ -28,10 +30,13 @@ const Auth = {
      success = true;
      status = 201;
 
+     data.password = await hash(password)
+
      data._id = employee_db.length +1;
      employee_db.push(data)
 
     data.token = token(email);
+
     delete data.password;
 
     return res.status(status).json({ status, success, message: 'User created successfully', data });
@@ -53,17 +58,21 @@ const Auth = {
 
    const {
      email,
-     password,
+     password
       } = req.body;
 
-   if (email && password) {
 
-    if (getOne(email) !== undefined) {
+   if (email && password) {
+     const user = getOne(email);
+
+    if (user) {
+      const comparePassword = await checkPassword(password, user.password);
+       if (!comparePassword) return res.status(status).json({ status, success, error: 'Password incorrect. Try again' });
+
       success = true;
       status = 200;
-      const data = getOne(email);
 
-      console.log('get usr', getOne(email))
+      const data = getOne(email);
 
     data.token = token(email);
     delete data.password;
