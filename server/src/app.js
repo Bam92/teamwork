@@ -3,8 +3,8 @@ import './app';
 import express from 'express';
 import bodyParser from 'body-parser';
 import chalk from 'chalk';
-//import debug from 'debug'('app');
 import morgan from 'morgan';
+import { port, endpoint } from '../../config';
 
 
 import auth from './routes/auth';
@@ -21,13 +21,8 @@ app.post('/', (req, res) => {
   return res.status(200).send('Welcome! The server is working properly');
 })
 
-const baseUrl = '/api/v1';
-
-//  / ROUTES ///
-app.use(`${baseUrl}/auth`, auth);
-app.use(baseUrl, articles);
-
-const port = process.env.PORT || 3000;
+app.use(`${endpoint}/auth`, auth);
+app.use(endpoint, articles);
 
 app.listen(port, () => {
     console.log(`The server is listning on port ${chalk.green(port)}`);
