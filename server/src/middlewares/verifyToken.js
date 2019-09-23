@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { getOne as employee } from '../models/employee';
+import { privateKey } from '../../../config';
 
  /**
    * Verify Token
@@ -17,7 +18,7 @@ import { getOne as employee } from '../models/employee';
     }
 
     try {
-      const decoded = jwt.verify(headerToken, 'privateKey');
+      const decoded = jwt.verify(headerToken, privateKey);
       status = 401;
       if (!decoded) return res.status(status).json({ status, success, error: 'Invalid token provided' });
 
