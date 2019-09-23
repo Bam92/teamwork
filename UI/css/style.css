@@ -40,6 +40,15 @@ a {
     background-size: auto 100%;
 }
 
+blockquote p {
+  box-shadow: 0 -6px 0 var(--main-bg-color);
+  margin-top: 1.3em;
+  color: hsl(247, 30%, 49%);
+  font-style: italic;
+  font-family: var(--headings-font);
+  font-size: 2.1em;
+}
+
 /* ------ NAVIGATION BAR ---------*/
 header,
 #main-nav {
@@ -436,19 +445,16 @@ input[type=checkbox] {
     margin-bottom: 5em;
 }
 
-.post-content {
+.post-content,
+.comment-section {
     margin: 2em 0;
-    width: 65vw;
+    width: 50vw;
 }
 
 hr {
     width: 100%;
     border: 1px solid;
-    width: 65vw;
-}
-
-.comment-section {
-    margin-left: -21em;
+    width: 50vw;
 }
 
 .comment-form-bloc {

@@ -11,7 +11,7 @@
     "lint": "eslint",
     "logs:prod": "heroku logs --tail",
     "test": "mocha --require @babel/register server/test/*  --exit",
-    "coverage": "nyc yarn test && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc yarn test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
