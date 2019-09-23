@@ -5,5 +5,6 @@ dotenv.config();
 module.exports = {
   endpoint: process.env.API_SUFFIX,
   privateKey: process.env.PRIVATE_KEY,
-  port: process.env.PORT
+  port: process.env.PORT,
+  coveralls: process.env.COVERALLS_REPO_TOKEN
 };
