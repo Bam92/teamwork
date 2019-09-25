@@ -10,9 +10,9 @@
     "dev": "DEBUG=app nodemon node server/dist/app.js",
     "lint": "eslint",
     "logs:prod": "heroku logs --tail",
-    "test": "mocha --require @babel/register server/test/*  --coverage --exit",
+    "test": "NODE_ENV=test nyc mocha --require @babel/register server/test/* --exit",
     "coverage": "nyc --reporter=text-lcov --cache mocha --require @babel/register server/test/*",
-    "coveralls": "yarn coverage | coveralls",
+    "coveralls": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
     "coveralls:old": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
     "test:coveralls": "NODE_ENV=test nyc yarn test && nyc report --reporter=text-lcov | coveralls",
     "report:coveralls": "cat lcov.info | ./node_modules/coveralls/bin/coveralls.js"
@@ -35,6 +35,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
+    "babel-plugin-istanbul": "^5.2.0",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
@@ -44,18 +45,17 @@
     "cheke": "^1.0.5",
     "coveralls": "^3.0.6",
     "debug": "^4.1.1",
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
-    "nyc": "^14.1.1",
-    "dotenv": "^8.1.0"
+    "nyc": "^14.1.1"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
     "mocha": "6.2.0",
     "mocha-lcov-reporter": "1.3.0"
-
   },
   "nodemonConfig": {
     "restartable": "rs",
