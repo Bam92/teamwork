@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import chalk from 'chalk';
 import morgan from 'morgan';
 import { port, endpoint } from '../../config';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './docs'
 
 
 import auth from './routes/auth';
@@ -16,6 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('tiny'));
+
+app.use(`${endpoint}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.post('/', (req, res) => {
   return res.status(200).send('Welcome! The server is working properly');
