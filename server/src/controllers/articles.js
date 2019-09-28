@@ -1,6 +1,9 @@
-import { articles_db, comments_db, getAll, getOne, getById, getCommentsByArticleId } from '../models/articles';
-import article_lastId from '../helpers/ids';
-import cheke from 'cheke';
+import { comments_db, getAll, getOne, getById, getCommentsByArticleId } from '../models/articles';
+import { getCategoryByName } from '../models/categories';
+import categories  from '../data/tags';
+import articles from '../data/articles';
+import flaggedArt from '../data/flaggedArt';
+import isFlagged  from '../models/flaggedArt';
 
 const Article = {
   /**
@@ -22,22 +25,37 @@ const Article = {
     let success = false;
     let status = 400;
 
-   const { title, article } = req.body;
+    const { title, article, category } = req.body;
 
    if (title && article) {
     if (getOne(title) === undefined) {
       success = true;
       status = 201;
 
+      const tagId = []
+
+      if (category) {
+        const tags = category.split(', ');
+        tags.map(tag => {
+            getCategoryByName(tag)
+            if (getCategoryByName(tag) != undefined) tagId.push(getCategoryByName(tag).id)
+            else {
+              const newTag = {id: categories.length + 1, name: tag}
+              categories.push(newTag)
+              tagId.push(newTag.id)
+            }
+          })
+          }
+
       const data = {
-        _id: articles_db.length + 1,
-        createdOn: new Date(),
+        _id: articles.length + 1,
         title,
         article,
-        authorId: req.currentEmployee._id
+        createdOn: new Date(),
+        authorId: req.currentEmployee._id,
+        categoryId: tagId
       };
-     // article_lastId = article_lastId + 1;
-    articles_db.push(data)
+    articles.push(data)
 
     return res.status(status).json({ status, success, message: 'Article successfully created', data });
   } else {
@@ -65,11 +83,10 @@ const Article = {
 
     if (title || article) {
 
-      // if (title.length > 0 || article.length > 0) {
         success = true;
         status = 201;
 
-        const data = articles_db.filter(art => art._id === parseInt(id)).map(art => {
+        const data = articles.filter(art => art._id === parseInt(id)).map(art => {
         art.updatedOn = new Date();
 
         if (title) art.title = title;
@@ -80,7 +97,6 @@ const Article = {
 
       return res.status(status).json({ status, success, message: 'article successfully edited', data });
 
-      // } else return res.status(status).json({ status, success, error: 'field must not be empty'});
     } else {
       return res.status(status).json({ status, success, error: 'title or article field not provided' });
     }
@@ -95,7 +111,7 @@ const Article = {
     if (isNaN(id)) return res.status(400).json({ status: 400, success: false, error: 'id must be a number' });
 
     const targetArt = getById(id)
-    , indexArt = articles_db.indexOf(targetArt)
+    , indexArt = articles.indexOf(targetArt)
     ;
 
     if (!targetArt) {
@@ -104,10 +120,9 @@ const Article = {
       return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
     }
 
-   articles_db.splice([indexArt],1);
+   articles.splice([indexArt],1);
 
-  console.log('db',  articles_db.length, articles_db)
-return res.status(status).json({ status, success, message: 'article successfully deleted' });
+  return res.status(status).json({ status, success, message: 'article successfully deleted' });
 
 
   },
@@ -138,8 +153,6 @@ return res.status(status).json({ status, success, message: 'article successfully
 
     comments_db.push(saveComment);
 
-    console.log(getCommentsByArticleId(1), 'comments')
-
     if (!comment) {
       success = false;
       status = 400;
@@ -147,7 +160,6 @@ return res.status(status).json({ status, success, message: 'article successfully
     }
 
     if (comment.length <= 0) {
-    console.log('Length: ', comment.length)
       success = false;
       status = 400;
       return res.status(status).json({ status, success, error: 'comment is empty' });
@@ -189,6 +201,46 @@ return res.status(status).json({ status, success, message: 'article successfully
     // console.log('comment for an article', getCommentsByArticleId(1))
 
     return res.status(status).json({ status, success, message: `all detail of article: ${id}`, data });
+  },
+
+  async flagArticle(req, res) {
+    let success = true;
+    let  status = 201;
+    const { id } = req.params;
+    const { reason } = req.body;
+
+    if (isNaN(id)) {
+      success = false;
+      status = 400;
+      return res.status(status).json({ status, success, error: 'id must be an integer' });
+    }
+
+    const targetArt = getById(id);
+
+    if (!targetArt) {
+      success = false;
+      status = 404;
+      return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
+    }
+
+    if (isFlagged(id)) {
+      success = false;
+      status = 409;
+      return res.status(status).json({ status, success, error: `article with id ${id} is already flagged` });
+    }
+
+    if (reason) {
+      const flagged = { _id: flaggedArt.length + 1, articleId: parseInt(id), reason };
+
+      flaggedArt.push(flagged)
+
+      return res.status(status).json({ status, success, message: `article with id ${id} successfully flagged` });
+    }
+    else {
+      success = false;
+      status = 400;
+      return res.status(status).json({ status, success, error: 'Please state the reason why you want to flag this article' });
+    }
   }
 };
 
