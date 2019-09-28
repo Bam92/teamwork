@@ -7,7 +7,6 @@ import { endpoint } from '../../config';
 import swaggerUi from 'swagger-ui-express';
 import { errors } from 'celebrate';
 
-import { port, endpoint } from '../../config';
 import swaggerDocument from './docs'
 
 
