@@ -8,12 +8,9 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 const PORT = 4000;
+// const baseUrl = '/api/v1';
 
 // Helper functions to start/stop app before/after tests
-
-let server = null;
-const startApp = () => app.listen(PORT);
-const tearDown = () => server.close();
 // const baseUrl = '/api/v1';
 
 describe('Article controller', () => {
@@ -28,7 +25,7 @@ describe('Article controller', () => {
         .get(`${baseUrl}/feeds`)
         .set('token', inValidToken)
         .then((res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(401);
           done();
         });
     });
@@ -38,14 +35,14 @@ describe('Article controller', () => {
         .get(`${baseUrl}/feeds`)
         .end((err, res) => {
           // expect(err).to.be.true;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
   });
 
     it('should send list of all articles', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
-
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
+// console.log('Base url', baseUrls)
       chai.request(app)
         .get(`${baseUrl}/feeds`)
         .set('token', validToken)
@@ -66,7 +63,7 @@ describe('Article controller', () => {
         .post(`${baseUrl}/articles`)
         .set('token', inValidToken)
         .then((res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(401);
           done();
         });
     });
@@ -76,13 +73,13 @@ describe('Article controller', () => {
         .post(`${baseUrl}/articles`)
         .end((err, res) => {
           // expect(err).to.be.true;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
     });
 
     it('should not create an article without title field', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjgzNzkzNTF9.8GT2Pr6S7y_fXBs2Ovtx4VQD2ccPjD7j7OtIuesoXCA';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       const newArt = {
         'title': '',
         'article': 'Just a test'
@@ -100,7 +97,7 @@ describe('Article controller', () => {
     });
 
     it('should not create an article with a empty description field', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjgzNzkzNTF9.8GT2Pr6S7y_fXBs2Ovtx4VQD2ccPjD7j7OtIuesoXCA';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       const newArt = {
         'title': 'Just a test',
         'article': ''
@@ -118,7 +115,7 @@ describe('Article controller', () => {
     });
 
     it('should create an article', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       const newArt = {
         'title': 'Just a test',
         'article': 'Lorem ipsum tpoasffd'
@@ -136,7 +133,7 @@ describe('Article controller', () => {
     });
 
     it('should not create an article twice', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       const newArt = {
         'title': 'Just a test',
         'article': 'Lorem ipsum tpoasffd'
@@ -162,7 +159,7 @@ describe('Article controller', () => {
         .patch(`${baseUrl}/articles/:id`)
         .set('token', inValidToken)
         .then((res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(401);
           done();
         });
     });
@@ -172,13 +169,13 @@ describe('Article controller', () => {
         .patch(`${baseUrl}/articles/:id`)
         .end((err, res) => {
           // expect(err).to.be.true;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
     });
 
     it('should check if provided id is an integer', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       chai.request(app)
         .patch(`${baseUrl}/articles/m`)
         .set('token', validToken)
@@ -191,7 +188,7 @@ describe('Article controller', () => {
     });
 
     it('should update the title of an article that exists', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       const newArt = {
         'title': 'Test is coming',
         'article': ''
@@ -210,7 +207,7 @@ describe('Article controller', () => {
     });
 
     it('should update the description of an article that exists', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       const newArt = {
         'title': '',
         'article': 'Test is coming'
@@ -237,7 +234,7 @@ describe('Article controller', () => {
         .delete(`${baseUrl}/articles/:id`)
         .set('token', inValidToken)
         .then((res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(401);
           done();
         });
     });
@@ -248,13 +245,13 @@ describe('Article controller', () => {
         .end((err, res) => {
           // expect(err).to.be.true;
           if (err) done(err)
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
     });
 
     it('should check if provided id is an integer', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       chai.request(app)
         .delete(`${baseUrl}/articles/m`)
         .set('token', validToken)
@@ -267,7 +264,7 @@ describe('Article controller', () => {
     });
 
     it('should delete article', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
 
       chai.request(app)
         .delete(`${baseUrl}/articles/1`)
@@ -289,7 +286,7 @@ describe('Article controller', () => {
         .post(`${baseUrl}/articles/:id/comments`)
         .set('token', inValidToken)
         .then((res) => {
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(401);
           done();
         });
     });
@@ -299,13 +296,13 @@ describe('Article controller', () => {
         .post(`${baseUrl}/articles/:id/comments`)
         .end((err, res) => {
           // expect(err).to.be.true;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
     });
 
     it('should check if provided id is an integer', (done) => {
-      const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFoLmxpZkBnbWFpbC5jb20iLCJpYXQiOjE1NjkxNTkyMjN9.OL2R4at5Bb-9j_XPCselh4bUOgB9-SYjJK-Z95G7jFE';
+      const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
       chai.request(app)
         .post(`${baseUrl}/articles/m/comments`)
         .set('token', validToken)
