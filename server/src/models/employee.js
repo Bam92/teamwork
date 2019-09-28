@@ -16,4 +16,16 @@ const getOne = email => {
   return employee_db.find( employee => employee.email === email )
 }
 
-export { employee_db, getOne };
+const userExist = (email, password) => {
+  employee_db.filter( employee => employee.email === email && employee.password === password )
+}
+console.log('kkkkkkd', userExist('sarah.lif@gmail.com', 'S@rah123'))
+// const userExist = (email, password) => {
+//   for (let user of employee_db) {
+//     console.log('user ', user)
+//     if (user.email === email && user.password === password) return user;
+//   }
+// }
+
+
+export { employee_db, getOne, userExist };

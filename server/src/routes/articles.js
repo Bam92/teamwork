@@ -9,7 +9,6 @@
 */
 
 import express from 'express';
-import cheke from 'cheke';
 import verifyToken from '../middlewares/verifyToken';
 import controller from '../controllers/articles';
 
@@ -21,5 +20,6 @@ router.patch('/articles/:id', verifyToken,controller.updateArticle);
 router.delete('/articles/:id', verifyToken, controller.deleteArticle);
 router.post('/articles/:id/comments', verifyToken, controller.addComment);
 router.get('/articles/:id', verifyToken, controller.getArticle);
+router.post('/articles/:id/flag', verifyToken, controller.flagArticle);
 
 export default router;

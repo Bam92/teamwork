@@ -5,11 +5,16 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { endpoint } from '../../config';
 import swaggerUi from 'swagger-ui-express';
+import { errors } from 'celebrate';
+
+import { port, endpoint } from '../../config';
 import swaggerDocument from './docs'
 
 
 import auth from './routes/auth';
 import articles from './routes/articles';
+import categories from './routes/categories';
+import comments from './routes/comments';
 
 const app = express();
 
@@ -20,12 +25,16 @@ app.use(morgan('tiny'));
 
 app.use(`${endpoint}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-app.post('/', (req, res) => {
-  return res.status(200).json('Welcome! The server is working properly');
+app.get('/', (req, res) => {
+  return res.status(200).json({ status: 200, success: true, error: 'Welcome! The server is working properly' });
 })
 
 app.use(`${endpoint}/auth`, auth);
 app.use(endpoint, articles);
+app.use(endpoint, categories);
+app.use(endpoint, comments);
+
+app.use(errors())
 
 app.use((req, res) => {
   const err = new Error('Not Found');

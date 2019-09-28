@@ -1,4 +1,5 @@
-import { employee_db, getOne } from '../models/employee';
+import debug from 'debug'
+import { employee_db, getOne, userExist } from '../models/employee';
 import token from '../helpers/getToken';
 import hash from '../helpers/hashPassword';
 import checkPassword from '../helpers/checkPassword';
@@ -14,32 +15,25 @@ const Auth = {
     let success = false;
     let status = 400;
 
-   const {
-     firstName,
-     lastName,
-     email,
-     password,
-     gender,
-     jobRole,
-     department,
-     address } = req.body;
+    const userInfo = req.body;
 
-     const data = req.body;
-
-   if (firstName && email && password) {
+   if (userInfo.firstName && userInfo.email && userInfo.password) {
+     if (getOne(userInfo.email)) return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
      success = true;
      status = 201;
 
-     data.password = await hash(password)
+     userInfo.password  = await hash(userInfo.password);
+     userInfo._id = employee_db.length + 1;
 
-     data._id = employee_db.length +1;
-     employee_db.push(data)
+     employee_db.push({
+       ...userInfo
+     })
 
-    data.token = token(email);
+    userInfo.token = token(userInfo.email);
 
-    delete data.password;
-
-    return res.status(status).json({ status, success, message: 'User created successfully', data });
+    delete userInfo.password;
+console.log('db: ', employee_db)
+    return res.status(status).json({ status, success, message: 'User created successfully', data: userInfo });
    } else {
      return res.status(status).json({ status, success, error: 'Required field missing. Try again' });
    }
@@ -56,29 +50,34 @@ const Auth = {
     let success = false;
     let status = 400;
 
+    // if (userInput.email && userInput.password) {
+    //   res.json('Ok')
+    // } else {
+    //   res.json('Fields not allowed!')
+    // }
    const {
      email,
      password
       } = req.body;
-
 
    if (email && password) {
      const user = getOne(email);
 
     if (user) {
       const comparePassword = await checkPassword(password, user.password);
-       if (!comparePassword) return res.status(status).json({ status, success, error: 'Password incorrect. Try again' });
+      if (!comparePassword) return res.status(status).json({ status, success, error: 'Password incorrect. Try again' });
 
       success = true;
       status = 200;
 
-      const data = getOne(email);
+      const data = user;
 
-    data.token = token(email);
-    delete data.password;
+      data.token = token(email);
+      delete data.password;
 
-    return res.status(status).json({ status, success, message: 'Employee signed in successfully', data });
+      return res.status(status).json({ status, success, message: 'Employee signed in successfully', data });
   } else {
+    status = 404;
     return res.status(status).json({ status, success, error: 'Employee does not exist. Try again' });
   }
    } else {

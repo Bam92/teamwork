@@ -9,21 +9,21 @@ import { privateKey } from '../../../config';
    */
     const verifyToken = (req, res, next) => {
     let success = false;
-    let status = 400;
+    let status = 401;
 
     const { token: headerToken = '' } = req.headers;
     if (!headerToken) {
-      status = 401;
+      status = 400;
       return res.status(status).json({status, success, message: 'No token provided'});
     }
 
     try {
       const decoded = jwt.verify(headerToken, privateKey);
-      status = 401;
+      // status = 401;
+
       if (!decoded) return res.status(status).json({ status, success, error: 'Invalid token provided' });
 
-      const getEmployee = employee(decoded.email);
-
+      const getEmployee = employee(decoded);
       if (!getEmployee) return res.status(status).json({ status, error: 'Invalid token provided' });
 
       req.currentEmployee = getEmployee;
