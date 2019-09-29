@@ -4,9 +4,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/6e322a366ad4c4c68128/maintainability)](https://codeclimate.com/github/Bam92/teamwork/maintainability)
 ![David](https://img.shields.io/david/bam92/teamwork)
 ![Abel](https://img.shields.io/badge/andela-btcamp-blue)
-[![Known Vulnerabilities](https://snyk.io/test/github/Bam92/teamwork/badge.svg)](https://snyk.io/test/github/{username}/teamwork)
-[![codecov](https://codecov.io/gh/Bam92/teamwork/branch/develop/graph/badge.svg)](https://codecov.io/gh/Bam92/teamwork)
-[![codecov](https://codecov.io/gh/Bam92/teamwork/branch/bg-readme-badges-168540728/graph/badge.svg)](https://codecov.io/gh/Bam92/teamwork)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Teamwork is an ​ internal social network for organizations’ employees. The goal of this
