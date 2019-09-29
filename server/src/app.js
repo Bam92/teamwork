@@ -2,12 +2,11 @@ import "babel-polyfill";
 import './app';
 import express from 'express';
 import bodyParser from 'body-parser';
-import chalk from 'chalk';
 import morgan from 'morgan';
+import { endpoint } from '../../config';
 import swaggerUi from 'swagger-ui-express';
 import { errors } from 'celebrate';
 
-import { port, endpoint } from '../../config';
 import swaggerDocument from './docs'
 
 
@@ -36,16 +35,24 @@ app.use(endpoint, comments);
 
 app.use(errors())
 
-app.get('/*', (req, res) => {
-  return res.status(404).json({
-    status: 404,
+app.use((req, res) => {
+  const err = new Error('Not Found');
+  const status = err.status = 404;
+  res.status(status).json({
+    status,
     success: false,
-    error: 'Route not found'
-  });
-})
-
-app.listen(port, () => {
-    console.log(`The server is listning on port ${chalk.green(port)}`);
+    error: err.message
+  })
 });
+
+app.use((err, res) => {
+  const status = err.status || 500;
+  res.status(status).json({
+    status,
+    success: false,
+    error: err.message,
+  });
+});
+
 
 export default app;

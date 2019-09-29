@@ -5,17 +5,11 @@
   "main": "server/src/app.js",
   "scripts": {
     "build": "babel server/src -d server/dist",
-    "start": "yarn build && nodemon server/dist/app.js",
-    "serve": "yarn build && node server/dist/app.js",
-    "dev": "DEBUG=app nodemon node server/dist/app.js",
-    "lint": "eslint",
+    "start": "yarn build && nodemon server/dist/server.js",
+    "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
-    "test": "NODE_ENV=test nyc mocha --require @babel/register server/test/* --exit",
-    "coverage": "nyc --reporter=text-lcov --cache mocha --require @babel/register server/test/*",
-    "coveralls": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
-    "coveralls:old": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
-    "test:coveralls": "NODE_ENV=test nyc yarn test && nyc report --reporter=text-lcov | coveralls",
-    "report:coveralls": "cat lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "nyc --reporter=html mocha --require @babel/register server/test/* --timeout 10000 --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -55,7 +49,7 @@
     "swagger-ui-express": "^4.1.1"
   },
   "devDependencies": {
-    "eslint": "^6.3.0",
+    "eslint": "^6.4.0",
     "mocha": "6.2.0",
     "mocha-lcov-reporter": "1.3.0"
   },
