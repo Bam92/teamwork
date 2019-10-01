@@ -142,6 +142,7 @@ main {
     flex-wrap: wrap;
     margin-top: 2.5%;
     flex: 1 0 auto;
+    justify-content: center;
 }
 
 #img-container img {
@@ -410,11 +411,11 @@ input[type=checkbox] {
   padding: 2.5em;
 }
 
-.post-detail-image {
+/*.post-detail-image {
     width: 100vw;
     height: 100vh;
 }
-
+*/
 .author-img {
     width: 2.8em;
     height: 2.8em;
@@ -581,6 +582,7 @@ hr {
 
   .logo {
     width: 43%;
+    font-size: 1.1em;
   }
 
     h1 {
@@ -643,10 +645,10 @@ hr {
     width: 100vw;
   }
 
-  .post-bloc {
-    padding: 0;
-    margin-bottom: 1em;
-    text-align: center;
+.post-bloc {
+  padding: 0;
+  margin-bottom: 1em;
+  text-align: center;
 }
 
 .post-description {
@@ -667,6 +669,41 @@ hr {
 .edit-art-modal-content,
 .del-art-modal-content {
   margin: 14em 0;
+}
+
+.list-posts,
+.my-posts {
+  width: 90vw;
+}
+
+.post-illustration {
+  height: unset;
+}
+
+.post-illustration,
+.user-post {
+  width: 90vw;
+}
+
+.post-detail-image {
+  height: 50vh;
+}
+
+.post-content,
+.comment-section
+ {
+    width: 100%;
+    font-size: 1.5em;
+}
+
+hr { width: 80vw; }
+
+.comment-form-bloc,
+.post-content p { width: 100%; }
+
+.edit-art-modal,
+#modal {
+  top: -105px;
 }
 
 }
@@ -726,6 +763,11 @@ hr {
 
     .user-post {
         flex-wrap: wrap;
+        width: 100%;
     }
+
+blockquote {
+    font-size: .9em;
+}
 
 }
