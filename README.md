@@ -9,10 +9,12 @@
 Teamwork is an ​ internal social network for organizations’ employees. The goal of this
 application is to facilitate more interaction between colleagues and facilitate team boarding
 
-* UI template: https://bam92.github.io/teamwork/UI/
-* API: https://teamwork-andela.herokuapp.com$/api/v1/
-* API documentation: https://teamwork-andela.herokuapp.com/api/v1/docs/
-* Pivotal Tracker: https://www.pivotaltracker.com/n/projects/2395147
+# Links
+
+* [Front end](https://bam92.github.io/teamwork/UI/)
+* [Back end](https://teamwork-andela.herokuapp.com/api/v1/)
+* [Documentation](https://teamwork-andela.herokuapp.com/api/v1/docs/)
+* [User stories](https://www.pivotaltracker.com/n/projects/2395147)
 
 # Get Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -23,26 +25,50 @@ Here are the environment prerequisites for the web app
 - NodeJS at least v10
 
 ## Installing
+Make sure you have `yarn` installed already (`yarn --version` to test)
 Clone the repository
-Run `yarn install` to install packages
-Run `yarn start` to start the server
+- Run `yarn install` to install packages
+- Run `yarn start` to start the server
 
-# Run the tests
+## Running the tests
 `yarn test`
 
-## Endpoints
-Make sure you have Postman or other tool that can handle http request. Please refer to the docs for more explanation.
+# API endpoints
+Make sure you have `Postman` or other tool that can handle http request. Please refer to the docs for more explanation.
+**For base url refer to back end link**
+
+## GET
+* `feeds`
+* `/articles/categories/:id`
+* `/articles/:id`
+
+## POST 
+* `auth/signup`
+* `auth/signin`
+* `articles`
+* `articles/:id/comments`
+* `articles/:id/flag`
+* `comments/:id/flag`
+
+## PATCH
+* `articles/:id`
+
+## DELETE
+* `articles/:id`
 
 | Endpoint | Method | Functionality |
 | ---------| -------| --------------|
-| /api/v1/auth/signin | POST | Login registered employee |
-| /api/v1/auth/signup | POST | Register a new employee |
-| /api/v1/articles | POST | Create an article |
-| /api/v1/feeds | GET | Get list of all articles |
-| /api/v1/articles/`<:triarticleId>` | GET | Get a specific article |
-| /api/v1/articles/`<:triarticleId>` | PATCH | Update a specific article |
-| /api/v1/articles/`<:triarticleId>` | DELETE | Delete a specific article |
-| /api/v1/articles/`<:triarticleId>`/comments | POST | Post a comment on a specific article |
+| `auth/signin` | POST | Login registered employee |
+| `auth/signup `| POST | Register a new employee |
+| `articles `| POST | Create an article |
+| `feeds `| GET | Get list of all articles |
+| `articles/<:articleId>` | GET | Get a specific article |
+| `articles/<:articleId>` | PATCH | Update a specific article |
+| `articles/<:articleId>` | DELETE | Delete a specific article |
+| `articles/<:articleId>/comments` | POST | Post a comment on a specific article |
+| `articles/categories/<:categoryId>` | GET | Filter articles by category |
+| `articles/<:articleId>/flag` | POST | Flag an article |
+| `articles/<:commentId>/flag` | POST | Flag a comment |
 
 # Built with
 * HTML
