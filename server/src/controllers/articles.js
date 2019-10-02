@@ -4,6 +4,7 @@ import categories  from '../data/tags';
 import articles from '../data/articles';
 import flaggedArt from '../data/flaggedArt';
 import isFlagged  from '../models/flaggedArt';
+import { articleSchema } from '../helpers/validateArtInput';
 
 const Article = {
   /**
@@ -25,9 +26,18 @@ const Article = {
     let success = false;
     let status = 400;
 
-    const { title, article, category } = req.body;
+    const articleInfo = req.body;
 
-   if (title && article) {
+    const { error } = articleSchema(articleInfo);
+
+    if (error) {
+      const errorMessage = error.details[0].message;
+
+      return res.status(status).json({status, success, error: errorMessage });
+    }
+
+    const { title, article, category } = articleInfo;
+
     if (getOne(title) === undefined) {
       success = true;
       status = 201;
@@ -62,9 +72,6 @@ const Article = {
     status = 409;
     return res.status(status).json({ status, success, error: 'Article already exists. Try again with another title' });
   }
-   } else {
-     return res.status(status).json({ status, success, error: 'title or article field not provided' });
-   }
   },
 
   async updateArticle(req, res) {

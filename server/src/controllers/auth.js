@@ -1,8 +1,8 @@
-import debug from 'debug'
-import { employee_db, getOne, userExist } from '../models/employee';
+import { employee_db, getOne } from '../models/employee';
 import token from '../helpers/getToken';
 import hash from '../helpers/hashPassword';
 import checkPassword from '../helpers/checkPassword';
+import { signupSchema, signinSchema } from '../helpers/validateAuthInput';
 
 const Auth = {
   /**
@@ -17,26 +17,32 @@ const Auth = {
 
     const userInfo = req.body;
 
-   if (userInfo.firstName && userInfo.email && userInfo.password) {
-     if (getOne(userInfo.email)) return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
-     success = true;
-     status = 201;
+    const { error } = signupSchema(userInfo);
 
-     userInfo.password  = await hash(userInfo.password);
-     userInfo._id = employee_db.length + 1;
+    if (error) {
+      const errorMessage = error.details[0].message;
 
-     employee_db.push({
-       ...userInfo
-     })
+      return res.status(status).json({status, success, error: errorMessage });
+    }
 
-    userInfo.token = token(userInfo.email);
+     if (!getOne(userInfo.email)) {
+      success = true;
+      status = 201;
 
-    delete userInfo.password;
-console.log('db: ', employee_db)
-    return res.status(status).json({ status, success, message: 'User created successfully', data: userInfo });
-   } else {
-     return res.status(status).json({ status, success, error: 'Required field missing. Try again' });
-   }
+      userInfo.password  = await hash(userInfo.password);
+      userInfo._id = employee_db.length + 1;
+
+      employee_db.push({
+        ...userInfo
+      })
+
+      userInfo.token = token(userInfo.email);
+
+      delete userInfo.password;
+
+      return res.status(status).json({ status, success, message: 'User created successfully', data: userInfo });
+
+    } else return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
 
   },
 
@@ -50,21 +56,21 @@ console.log('db: ', employee_db)
     let success = false;
     let status = 400;
 
-    // if (userInput.email && userInput.password) {
-    //   res.json('Ok')
-    // } else {
-    //   res.json('Fields not allowed!')
-    // }
-   const {
-     email,
-     password
-      } = req.body;
+    const userInfo = req.body;
 
-   if (email && password) {
-     const user = getOne(email);
+    const { error } = signinSchema(userInfo);
+
+    if (error) {
+      const errorMessage = error.details[0].message;
+
+      return res.status(status).json({status, success, error: errorMessage });
+    }
+
+     const user = getOne(userInfo.email);
 
     if (user) {
-      const comparePassword = await checkPassword(password, user.password);
+      const comparePassword = await checkPassword(userInfo.password, user.password);
+
       if (!comparePassword) return res.status(status).json({ status, success, error: 'Password incorrect. Try again' });
 
       success = true;
@@ -72,7 +78,7 @@ console.log('db: ', employee_db)
 
       const data = user;
 
-      data.token = token(email);
+      data.token = token(userInfo.email);
       delete data.password;
 
       return res.status(status).json({ status, success, message: 'Employee signed in successfully', data });
@@ -80,9 +86,6 @@ console.log('db: ', employee_db)
     status = 404;
     return res.status(status).json({ status, success, error: 'Employee does not exist. Try again' });
   }
-   } else {
-     return res.status(status).json({ status, success, error: 'Email or password not provided. Try again' });
-   }
 
   }
 };

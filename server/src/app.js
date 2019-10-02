@@ -36,7 +36,7 @@ app.use(endpoint, comments);
 app.use(errors())
 
 app.use((req, res) => {
-  const err = new Error('Not Found');
+  const err = new Error('Route Not Found');
   const status = err.status = 404;
   res.status(status).json({
     status,
