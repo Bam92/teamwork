@@ -7,7 +7,7 @@ const Category = {
     let status = 200;
     const { id } = req.params;
 
-    if (isNaN(id)) return res.status(status).json({ status, success, error: 'id must be a number' });
+    if (isNaN(id)) return res.status(400).json({ status: 400, success: false, error: 'id must be a number' });
 
     if (!getCategoryById(id)) {
       status = 404;
