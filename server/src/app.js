@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { endpoint } from '../../config';
 import swaggerUi from 'swagger-ui-express';
-import { errors } from 'celebrate';
 
 import swaggerDocument from './docs'
 
@@ -33,10 +32,8 @@ app.use(endpoint, articles);
 app.use(endpoint, categories);
 app.use(endpoint, comments);
 
-app.use(errors())
-
 app.use((req, res) => {
-  const err = new Error('Not Found');
+  const err = new Error('Route Not Found');
   const status = err.status = 404;
   res.status(status).json({
     status,
