@@ -10,16 +10,16 @@
 
 import express from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import controller from '../controllers/articles';
+import Article from '../controllers/articles';
 
 const router = express.Router();
 
-router.get('/feeds', verifyToken, controller.getArticles);
-router.post('/articles', verifyToken, controller.createArticle);
-router.patch('/articles/:id', verifyToken,controller.updateArticle);
-router.delete('/articles/:id', verifyToken, controller.deleteArticle);
-router.post('/articles/:id/comments', verifyToken, controller.addComment);
-router.get('/articles/:id', verifyToken, controller.getArticle);
-router.post('/articles/:id/flag', verifyToken, controller.flagArticle);
+router.get('/feeds', verifyToken, Article.getArticles);
+router.post('/articles', verifyToken, Article.createArticle);
+router.patch('/articles/:id', verifyToken,Article.updateArticle);
+router.delete('/articles/:id', verifyToken, Article.deleteArticle);
+router.post('/articles/:id/comments', verifyToken, Article.addComment);
+router.get('/articles/:id', verifyToken, Article.getArticle);
+router.post('/articles/:id/flag', verifyToken, Article.flagArticle);
 
 export default router;

@@ -6,23 +6,23 @@ import flaggedArt from '../data/flaggedArt';
 import isFlagged  from '../models/flaggedArt';
 import { articleSchema } from '../helpers/validateArtInput';
 
-const Article = {
+class Article {
   /**
    * Create a new Employee
    * @param {object} req
    * @param {object} res
    * @returns {object} user object
    */
-  async getArticles(req, res) {
+    static getArticles(req, res) {
     const success = true;
     const status = 200;
     const data = getAll();
 
     return res.status(status).json({ status, success, message: 'List of all articles sorted by date asc', data });
 
-  },
+  }
 
-  async createArticle(req, res) {
+  static createArticle(req, res) {
     let success = false;
     let status = 400;
 
@@ -72,9 +72,9 @@ const Article = {
     status = 409;
     return res.status(status).json({ status, success, error: 'Article already exists. Try again with another title' });
   }
-  },
+  }
 
-  async updateArticle(req, res) {
+  static updateArticle(req, res) {
     let success = false;
     let  status = 400;
     const { id } = req.params;
@@ -108,9 +108,9 @@ const Article = {
       return res.status(status).json({ status, success, error: 'title or article field not provided' });
     }
 
-  },
+  }
 
-  async deleteArticle(req, res) {
+  static deleteArticle(req, res) {
     let success = true;
     let  status = 200;
     const { id } = req.params;
@@ -132,9 +132,9 @@ const Article = {
   return res.status(status).json({ status, success, message: 'article successfully deleted' });
 
 
-  },
+  }
 
-  async addComment(req, res) {
+  static addComment(req, res) {
     let success = true;
     let  status = 201;
     const { id } = req.params;
@@ -175,9 +175,9 @@ const Article = {
     const data = { createdOn: new Date() + 1, articleTitle: title, article, comment };
 
     return res.status(status).json({ status, success, message: 'comment successfully added', data });
-  },
+  }
 
-  async getArticle(req, res) {
+  static getArticle(req, res) {
     let success = true;
     let  status = 201;
     const { id } = req.params;
@@ -205,12 +205,10 @@ const Article = {
 
     data.comments = comments;
 
-    // console.log('comment for an article', getCommentsByArticleId(1))
-
     return res.status(status).json({ status, success, message: `all detail of article: ${id}`, data });
-  },
+  }
 
-  async flagArticle(req, res) {
+  static flagArticle(req, res) {
     let success = true;
     let  status = 201;
     const { id } = req.params;
@@ -249,6 +247,6 @@ const Article = {
       return res.status(status).json({ status, success, error: 'Please state the reason why you want to flag this article' });
     }
   }
-};
+}
 
 export default Article;
