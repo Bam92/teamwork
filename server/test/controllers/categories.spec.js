@@ -9,10 +9,11 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Category controller', () => {
+  const inValidToken = 'eyJhiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im03dmtxaW5tNCIsImlhdCI6MTU2NTMyODI5M30.MV80v4kB25rub0RVV4EE0eEn7pX1QMnwN1pTfZKfMwA';
+  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
+
   describe('GET articles by category', () => {
     it('should throw error if no valid token is provided', (done) => {
-      const inValidToken = 'eyJhiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im03dmtxaW5tNCIsImlhdCI6MTU2NTMyODI5M30.MV80v4kB25rub0RVV4EE0eEn7pX1QMnwN1pTfZKfMwA';
-
       chai.request(app)
         .get(`${baseUrl}/articles/categories/2`)
         .set('token', inValidToken)
@@ -32,7 +33,6 @@ describe('Category controller', () => {
   });
 
   it('should send list of all articles that match the requested category', (done) => {
-    const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
     chai.request(app)
       .get(`${baseUrl}/articles/categories/2`)
       .set('token', validToken)
@@ -44,7 +44,6 @@ describe('Category controller', () => {
 
 
 it('should throw an error if the requested category does not exist', (done) => {
-  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
   chai.request(app)
     .get(`${baseUrl}/articles/categories/25`)
     .set('token', validToken)
@@ -56,7 +55,6 @@ it('should throw an error if the requested category does not exist', (done) => {
 
 
 it('should throw an error if id in not an number', (done) => {
-  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
   chai.request(app)
     .get(`${baseUrl}/articles/categories/j2`)
     .set('token', validToken)

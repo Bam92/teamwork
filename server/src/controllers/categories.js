@@ -1,8 +1,8 @@
 import { getAllByTag } from '../models/articles';
 import { getCategoryById } from '../models/categories';
 
-const Category = {
-  async getArticlesByTag(req, res) {
+class Category {
+  static getArticlesByTag(req, res) {
     let success = true;
     let status = 200;
     const { id } = req.params;

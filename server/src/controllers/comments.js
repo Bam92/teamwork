@@ -2,8 +2,8 @@ import flaggedCom from '../data/flaggedCom';
 import { getById } from '../models/comments';
 import isFlagged from '../models/flaggedCom';
 
-const Comment = {
-  async flagComment(req, res) {
+class Comment {
+  static flagComment(req, res) {
     let success = true;
     let  status = 201;
     const { id } = req.params;

@@ -4,14 +4,14 @@ import hash from '../helpers/hashPassword';
 import checkPassword from '../helpers/checkPassword';
 import { signupSchema, signinSchema } from '../helpers/validateAuthInput';
 
-const Auth = {
+class Auth {
   /**
    * Create a new Employee
    * @param {object} req
    * @param {object} res
    * @returns {object} Employee object
    */
-  async signup(req, res) {
+  static signup(req, res) {
     let success = false;
     let status = 400;
 
@@ -29,7 +29,7 @@ const Auth = {
       success = true;
       status = 201;
 
-      userInfo.password  = await hash(userInfo.password);
+      userInfo.password  = hash(userInfo.password);
       userInfo._id = employee_db.length + 1;
 
       employee_db.push({
@@ -44,7 +44,7 @@ const Auth = {
 
     } else return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
 
-  },
+  }
 
   /**
    * Signin an Employee
@@ -52,7 +52,7 @@ const Auth = {
    * @param {object} res
    * @returns {object} user object
    */
-  async signin(req, res) {
+  static signin(req, res) {
     let success = false;
     let status = 400;
 
@@ -69,7 +69,7 @@ const Auth = {
      const user = getOne(userInfo.email);
 
     if (user) {
-      const comparePassword = await checkPassword(userInfo.password, user.password);
+      const comparePassword = checkPassword(userInfo.password, user.password);
 
       if (!comparePassword) return res.status(status).json({ status, success, error: 'Password incorrect. Try again' });
 
@@ -88,6 +88,6 @@ const Auth = {
   }
 
   }
-};
+}
 
 export default Auth;

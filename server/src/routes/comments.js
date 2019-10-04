@@ -1,9 +1,9 @@
 import express from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import controller from '../controllers/comments';
+import Comment from '../controllers/comments';
 
 const router = express.Router();
 
-router.post('/comments/:id/flag', verifyToken, controller.flagComment);
+router.post('/comments/:id/flag', verifyToken, Comment.flagComment);
 
 export default router;

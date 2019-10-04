@@ -9,10 +9,11 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Flag a comment', () => {
+  const inValidToken = 'eyJhiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im03dmtxaW5tNCIsImlhdCI6MTU2NTMyODI5M30.MV80v4kB25rub0RVV4EE0eEn7pX1QMnwN1pTfZKfMwA';
+  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
+
   describe('Flag a comment', () => {
     it('should throw error if no valid token is provided', (done) => {
-      const inValidToken = 'eyJhiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im03dmtxaW5tNCIsImlhdCI6MTU2NTMyODI5M30.MV80v4kB25rub0RVV4EE0eEn7pX1QMnwN1pTfZKfMwA';
-
       chai.request(app)
         .post(`${baseUrl}/comments/2/flag`)
         .set('token', inValidToken)
@@ -32,7 +33,6 @@ describe('Flag a comment', () => {
   });
 
   it('should flag an existing comment', (done) => {
-    const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
     chai.request(app)
       .post(`${baseUrl}/comments/2/flag`)
       .set('token', validToken)
@@ -44,7 +44,6 @@ describe('Flag a comment', () => {
 });
 
 it('should not flag an existing comment with an empty reason field', (done) => {
-  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
   chai.request(app)
     .post(`${baseUrl}/comments/1/flag`)
     .set('token', validToken)
