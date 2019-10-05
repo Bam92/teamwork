@@ -1,10 +1,10 @@
 import { comments_db, getAll, getOne, getById, getCommentsByArticleId } from '../models/articles';
-import { getCategoryByName } from '../models/categories';
-import categories  from '../data/tags';
+import { saveCategories } from '../models/categories';
 import articles from '../data/articles';
 import flaggedArt from '../data/flaggedArt';
 import isFlagged  from '../models/flaggedArt';
 import { articleSchema } from '../helpers/validateArtInput';
+import { commentSchema } from '../helpers/validateComInput';
 
 class Article {
   /**
@@ -27,36 +27,21 @@ class Article {
     let status = 400;
 
     const articleInfo = req.body;
+    const { title, article, category } = articleInfo;
 
     const { error } = articleSchema(articleInfo);
-
     if (error) {
       const errorMessage = error.details[0].message;
 
       return res.status(status).json({status, success, error: errorMessage });
     }
 
-    const { title, article, category } = articleInfo;
-
     if (getOne(title) === undefined) {
       success = true;
       status = 201;
+      let tagId;
 
-      const tagId = []
-
-      if (category) {
-        const tags = category.split(', ');
-        tags.map(tag => {
-            getCategoryByName(tag)
-            if (getCategoryByName(tag) != undefined) tagId.push(getCategoryByName(tag).id)
-            else {
-              const newTag = {id: categories.length + 1, name: tag}
-              categories.push(newTag)
-              tagId.push(newTag.id)
-            }
-          })
-          }
-
+      if (category) tagId = saveCategories(category)
       const data = {
         _id: articles.length + 1,
         title,
@@ -65,13 +50,14 @@ class Article {
         authorId: req.currentEmployee._id,
         categoryId: tagId
       };
+
     articles.push(data)
 
     return res.status(status).json({ status, success, message: 'Article successfully created', data });
   } else {
     status = 409;
     return res.status(status).json({ status, success, error: 'Article already exists. Try again with another title' });
-  }
+    }
   }
 
   static updateArticle(req, res) {
@@ -89,7 +75,6 @@ class Article {
     }
 
     if (title || article) {
-
         success = true;
         status = 201;
 
@@ -138,6 +123,7 @@ class Article {
     let success = true;
     let  status = 201;
     const { id } = req.params;
+    const targetArt = getById(id);
 
     if (isNaN(id)) {
       success = false;
@@ -145,8 +131,6 @@ class Article {
 
       return res.status(status).json({ status, success, error: 'id must be an integer' });
     }
-
-    const targetArt = getById(id);
 
     if (!targetArt) {
       success = false;
