@@ -22,28 +22,28 @@ class Auth {
     if (error) {
       const errorMessage = error.details[0].message;
 
-      return res.status(status).json({status, success, error: errorMessage });
+      return res.status(status).json({ status, success, error: errorMessage });
     }
 
-     if (!getOne(userInfo.email)) {
+    if (!getOne(userInfo.email)) {
       success = true;
       status = 201;
 
-      userInfo.password  = hash(userInfo.password);
+      userInfo.password = hash(userInfo.password);
       userInfo._id = employee_db.length + 1;
 
       employee_db.push({
-        ...userInfo
-      })
+        ...userInfo,
+      });
 
       userInfo.token = token(userInfo.email);
 
       delete userInfo.password;
 
-      return res.status(status).json({ status, success, message: 'User created successfully', data: userInfo });
-
-    } else return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
-
+      return res.status(status).json({
+        status, success, message: 'User created successfully', data: userInfo,
+      });
+    } return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
   }
 
   /**
@@ -63,10 +63,11 @@ class Auth {
     if (error) {
       const errorMessage = error.details[0].message;
 
-      return res.status(status).json({status, success, error: errorMessage });
+      return res.status(status).json({ status, success, error: errorMessage });
     }
 
-     const user = getOne(userInfo.email);
+
+    const user = getOne(userInfo.email);
 
     if (user) {
       const comparePassword = checkPassword(userInfo.password, user.password);
@@ -81,12 +82,12 @@ class Auth {
       data.token = token(userInfo.email);
       delete data.password;
 
-      return res.status(status).json({ status, success, message: 'Employee signed in successfully', data });
-  } else {
+      return res.status(status).json({
+        status, success, message: 'Employee signed in successfully', data,
+      });
+    }
     status = 404;
     return res.status(status).json({ status, success, error: 'Employee does not exist. Try again' });
-  }
-
   }
 }
 

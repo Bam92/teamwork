@@ -31,8 +31,6 @@ class Auth {
     const hashPassword = hash(password);
     const { error } = signupSchema(userInfo);
 
-    console.log('hash error', hashPassword);
-
     if (error) {
       const errorMessage = error.details[0].message;
 
@@ -74,12 +72,12 @@ class Auth {
    * @returns {object} user object
    */
   static signin(req, res) {
-    let success = false;
-    let status = 400;
+    const success = true;
+    const status = 200;
 
-    const userInfo = req.body;
+    const { email, password } = req.body;
 
-    const { error } = signinSchema(userInfo);
+    const { error } = signinSchema(req.body);
 
     if (error) {
       const errorMessage = error.details[0].message;
@@ -87,27 +85,25 @@ class Auth {
       return res.status(status).json({ status, success, error: errorMessage });
     }
 
-    const user = getOne(userInfo.email);
+    client
+      .query('SELECT * FROM employee WHERE email=$1', [email], (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(status).json(err);
+        }
 
-    if (user) {
-      const comparePassword = checkPassword(userInfo.password, user.password);
+        if (!result) return res.status(404).json({ status: 404, success, error: 'Invalid credential 1' });
+        if (!checkPassword(password, result.rows[0].password)) return res.status(404).json({ status: 404, success, message: 'Invalid credential 2' });
 
-      if (!comparePassword) return res.status(status).json({ status, success, error: 'Password incorrect. Try again' });
+        const data = result.rows[0];
+        data.token = token(email);
 
-      success = true;
-      status = 200;
+        delete data.password;
 
-      const data = user;
-
-      data.token = token(userInfo.email);
-      delete data.password;
-
-      return res.status(status).json({
- status, success, message: 'Employee signed in successfully', data
-});
-    }
-    status = 404;
-    return res.status(status).json({ status, success, error: 'Employee does not exist. Try again' });
+        res.status(status).json({
+          status, success, message: 'User created successfully', data,
+        });
+      });
   }
 }
 
