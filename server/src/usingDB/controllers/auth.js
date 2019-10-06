@@ -1,8 +1,8 @@
 import { employee_db, getOne } from '../models/employee';
-import token from '../helpers/getToken';
-import hash from '../helpers/hashPassword';
-import checkPassword from '../helpers/checkPassword';
-import { signupSchema, signinSchema } from '../helpers/validateAuthInput';
+import token from '../../helpers/getToken';
+import hash from '../../helpers/hashPassword';
+import checkPassword from '../../helpers/checkPassword';
+import { signupSchema, signinSchema } from '../../helpers/validateAuthInput';
 
 class Auth {
   /**

@@ -14,7 +14,7 @@
 
 import express from 'express';
 
-import Auth from '../controllers/auth';
+import Auth from '../usingDS/controllers/auth';
 
 const router = express.Router();
 

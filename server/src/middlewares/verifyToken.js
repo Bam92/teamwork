@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { getOne as employee } from '../models/employee';
+import { getOne as employee } from '../usingDS/models/employee';
 import { privateKey } from '../../../config';
 
  /**

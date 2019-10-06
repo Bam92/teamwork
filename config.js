@@ -7,5 +7,7 @@ module.exports = {
   privateKey: process.env.PRIVATE_KEY,
   port: process.env.PORT,
   coveralls: process.env.COVERALLS_REPO_TOKEN,
-  emailRegx: process.env.EMAIL_REGEX
+  emailRegx: process.env.EMAIL_REGEX,
+  type: process.env.TYPE,
+  db_connection: process.env.DATABASE_URL,
 };

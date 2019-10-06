@@ -3,8 +3,7 @@ import { saveCategories } from '../models/categories';
 import articles from '../data/articles';
 import flaggedArt from '../data/flaggedArt';
 import isFlagged  from '../models/flaggedArt';
-import { articleSchema } from '../helpers/validateArtInput';
-import { commentSchema } from '../helpers/validateComInput';
+import { articleSchema } from '../../helpers/validateArtInput';
 
 class Article {
   /**

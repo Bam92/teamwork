@@ -1,9 +1,8 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 
-import app from '../../src/app';
-import articles_db from '../../src/data/articles'
-import { getOne } from '../../src/models/articles';
+import articles_db from '../../src/usingDS/data/articles'
+import { getOne } from '../../src/usingDS/models/articles';
 
 chai.use(chaiHttp);
 const { expect } = chai;
