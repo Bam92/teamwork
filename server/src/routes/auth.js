@@ -14,7 +14,13 @@
 
 import express from 'express';
 
-import Auth from '../usingDS/controllers/auth';
+import { type } from '../../../config';
+
+
+import AuthwithDS from '../usingDS/controllers/auth';
+import AuthwithDB from '../usingDB/controllers/auth';
+
+const Auth = type === 'db' ? AuthwithDB : AuthwithDS;
 
 const router = express.Router();
 
