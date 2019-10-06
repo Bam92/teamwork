@@ -1,8 +1,17 @@
+import { Client } from 'pg';
 import { employee_db, getOne } from '../models/employee';
 import token from '../../helpers/getToken';
 import hash from '../../helpers/hashPassword';
 import checkPassword from '../../helpers/checkPassword';
 import { signupSchema, signinSchema } from '../../helpers/validateAuthInput';
+
+import { db_connection } from '../../../../config';
+
+const client = new Client({
+  connectionString: db_connection,
+});
+
+client.connect();
 
 class Auth {
   /**
@@ -12,38 +21,50 @@ class Auth {
    * @returns {object} Employee object
    */
   static signup(req, res) {
-    let success = false;
-    let status = 400;
+    let success = true;
+    let status = 201;
 
     const userInfo = req.body;
-
+    const {
+      first_name, last_name, email, password, gender, jobRole, department, address,
+    } = userInfo;
+    const hashPassword = hash(password);
     const { error } = signupSchema(userInfo);
+
+    console.log('hash error', hashPassword);
 
     if (error) {
       const errorMessage = error.details[0].message;
 
-      return res.status(status).json({status, success, error: errorMessage });
+      return res.status(status).json({ status, success, error: errorMessage });
     }
 
-     if (!getOne(userInfo.email)) {
-      success = true;
-      status = 201;
 
-      userInfo.password  = hash(userInfo.password);
-      userInfo._id = employee_db.length + 1;
+    const cols = [first_name, last_name, email, hashPassword, gender, jobRole, department, address];
+    const sql = 'INSERT INTO employee(first_name, last_name, email, password, gender, jobRole, department, address) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
 
-      employee_db.push({
-        ...userInfo
-      })
+    client
+      .query(sql, cols, (err, result) => {
+        if (err) {
+          status = 400;
+          success = false;
 
-      userInfo.token = token(userInfo.email);
+          if (err.routine === '_bt_check_unique') return res.status(409).json({ status: 409, success, error: 'User with this email already exists.' });
 
-      delete userInfo.password;
+          res.status(status).json({
+            status, success, error: 'Error Saving : %s ', err,
+          });
+        }
 
-      return res.status(status).json({ status, success, message: 'User created successfully', data: userInfo });
+        const data = result.rows[0];
+        data.token = token(email);
 
-    } else return res.status(409).json({ status: 409, success, error: 'User already exist. Try again an other email' });
+        delete data.password;
 
+        res.status(status).json({
+          status, success, message: 'User created successfully', data,
+        });
+      });
   }
 
   /**
@@ -63,10 +84,10 @@ class Auth {
     if (error) {
       const errorMessage = error.details[0].message;
 
-      return res.status(status).json({status, success, error: errorMessage });
+      return res.status(status).json({ status, success, error: errorMessage });
     }
 
-     const user = getOne(userInfo.email);
+    const user = getOne(userInfo.email);
 
     if (user) {
       const comparePassword = checkPassword(userInfo.password, user.password);
@@ -81,12 +102,12 @@ class Auth {
       data.token = token(userInfo.email);
       delete data.password;
 
-      return res.status(status).json({ status, success, message: 'Employee signed in successfully', data });
-  } else {
+      return res.status(status).json({
+ status, success, message: 'Employee signed in successfully', data
+});
+    }
     status = 404;
     return res.status(status).json({ status, success, error: 'Employee does not exist. Try again' });
-  }
-
   }
 }
 

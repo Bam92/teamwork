@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import format from 'pg-format';
 
 import { db_connection } from '../../../../config';
 
@@ -6,30 +7,34 @@ const pool = new Pool({
   connectionString: db_connection,
 });
 
-console.log('DB..', pool)
 /**
  * Create User Table
  */
 const createEmployeeTable = () => {
-  const queryText = `CREATE TABLE IF NOT EXISTS
-  employee(
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(128) UNIQUE NOT NULL,
-    first_name VARCHAR(128) NOT NULL,
-    last_name VARCHAR(128) NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    is_admin BOOLEAN NOT NULL
-  )`;
+  pool.connect((err, done) => {
+    const sql = format(`CREATE TABLE IF NOT EXISTS
+    employee(
+      id SERIAL PRIMARY KEY,
+      first_name VARCHAR(128) NOT NULL,
+      last_name VARCHAR(128),
+      email VARCHAR(25) UNIQUE NOT NULL,
+      password VARCHAR(128) NOT NULL,
+      gender VARCHAR(10),
+      jobRole VARCHAR(35),
+      department VARCHAR(18),
+      address VARCHAR(35)
+    )`);
 
-  pool.query(queryText)
-    .then(() => {
-      pool.end();
-      process.exit(0);
-    })
-    .catch(() => {
-      pool.end();
-      process.exit(0);
+    pool.query(sql, (err, result) => {
+      if (err) {
+        console.log(err)
+        throw err
+      }
+      console.log(result);
     });
+
+    // done();
+  });
 };
 
 /**
@@ -53,7 +58,7 @@ const dropEmployeeTable = () => {
  * Create All Tables
  */
 const createAllTables = () => {
-  createEmployeeTable();
+  dropEmployeeTable();
 };
 
 /**

@@ -7,6 +7,7 @@
     "build": "babel server/src -d server/dist",
     "start": "yarn build && nodemon server/dist/server.js",
     "table:create": "node server/dist/usingDB/db/db.js createEmployeeTable",
+    "table:drop": "node server/dist/usingDB/db/db.js dropEmployeeTable",
     "populate": "node server/dist/usingDB/db/seed.js createEmployee",
     "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
