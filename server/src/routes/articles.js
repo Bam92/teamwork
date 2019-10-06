@@ -10,7 +10,7 @@
 
 import express from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Article from '../controllers/articles';
+import Article from '../usingDS/controllers/articles';
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-import { getCategoryById } from '../models/categories';
+import { getCategoryById } from './categories';
 import articles_db from '../data/articles';
 import comments_db from '../data/comments';
 

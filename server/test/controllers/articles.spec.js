@@ -30,7 +30,7 @@ describe('Article controller', () => {
           expect(res).to.have.status(400);
           done();
         });
-  });
+    });
 
     it('should send list of all articles', (done) => {
       chai.request(app)
