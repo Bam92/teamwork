@@ -4,14 +4,14 @@
   "description": "Teamwork is an ​ internal social network for organizations’ employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding",
   "main": "server/src/app.js",
   "scripts": {
-    "build": "babel server/src -d server/dist",
-    "start": "yarn build && nodemon server/dist/server.js",
+    "build": "babel database/server/src -d database/server/dist",
+    "start": "yarn build && nodemon database/server/dist/server.js",
     "table:create": "node server/dist/usingDB/db/db.js createEmployeeTable",
     "table:drop": "node server/dist/usingDB/db/db.js dropEmployeeTable",
     "populate": "node server/dist/usingDB/db/seed.js createEmployee",
     "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
-    "test": "nyc --reporter=html mocha --require @babel/register server/test/* --timeout 10000 --exit",
+    "test": "nyc --reporter=html mocha --require @babel/register database/server/test/index.js --timeout 10000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

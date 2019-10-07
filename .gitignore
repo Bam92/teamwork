@@ -60,6 +60,8 @@ typings/
 # next.js build output
 .next
 
-server/dist
+data-structure/server/dist/*
+database/server/dist/*
+server.old/*
 
 yarn.lock
