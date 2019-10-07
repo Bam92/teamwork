@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Category from '../usingDS/controllers/categories';
+import Category from '../controllers/categories';
 
 const router = express.Router();
 

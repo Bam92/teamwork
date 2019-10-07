@@ -1,6 +1,6 @@
 import chai from 'chai';
 
-import verifyToken from '../../src/middlewares/verifyToken';
+import verifyToken from '../../src/usingDS/middlewares/verifyToken';
 
 const { expect } = chai;
 

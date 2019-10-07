@@ -3,15 +3,10 @@ import './app';
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import { Pool } from 'pg';
-import format from 'pg-format';
-import { endpoint } from '../../config';
 import swaggerUi from 'swagger-ui-express';
-import { db_connection } from '../../config';
 
+import { baseUrl2 } from '../../../config';
 import swaggerDocument from './docs';
-
-
 import auth from './routes/auth';
 import articles from './routes/articles';
 import categories from './routes/categories';
@@ -24,14 +19,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('tiny'));
 
-app.use(`${endpoint}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(`${baseUrl2}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => res.status(200).json({ status: 200, success: true, error: 'Welcome! The server is working properly' }));
 
-app.use(`${endpoint}/auth`, auth);
-app.use(endpoint, articles);
-app.use(endpoint, categories);
-app.use(endpoint, comments);
+app.use(`${baseUrl2}/auth`, auth);
+app.use(baseUrl2, articles);
+app.use(baseUrl2, categories);
+app.use(baseUrl2, comments);
 
 app.use((req, res) => {
   const err = new Error('Route Not Found');

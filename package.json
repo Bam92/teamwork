@@ -6,12 +6,12 @@
   "scripts": {
     "build": "babel database/server/src -d database/server/dist",
     "start": "yarn build && nodemon database/server/dist/server.js",
-    "table:create": "node server/dist/usingDB/db/db.js createEmployeeTable",
-    "table:drop": "node server/dist/usingDB/db/db.js dropEmployeeTable",
-    "populate": "node server/dist/usingDB/db/seed.js createEmployee",
+    "table:create": "node server/dist/db/db.js createEmployeeTable",
+    "table:drop": "node server/dist/db/db.js dropEmployeeTable",
+    "populate": "node server/dist/db/seed.js createEmployee",
     "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
-    "test": "nyc --reporter=html mocha --require @babel/register database/server/test/index --timeout 10000 --exit",
+    "test": "nyc --reporter=html mocha --require @babel/register database/server/test/ --timeout 10000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

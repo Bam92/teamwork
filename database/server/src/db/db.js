@@ -33,7 +33,6 @@ const createEmployeeTable = () => {
       console.log(result);
     });
 
-    // done();
   });
 };
 

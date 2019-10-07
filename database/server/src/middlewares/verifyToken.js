@@ -1,32 +1,34 @@
 import jwt from 'jsonwebtoken';
-import { getOne as employee } from '../models/employee';
 import { privateKey } from '../../../../config';
-
+import dbConnection from '../db/getConnection';
+import findEmployee from '../models/employee';
 /**
    * Verify Token
    * @param {string} token
    * @returns {string} decoded
    */
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   const success = false;
   let status = 401;
 
   const { token: headerToken = '' } = req.headers;
+
   if (!headerToken) {
     status = 400;
     return res.status(status).json({ status, success, message: 'No token provided' });
   }
 
   try {
-    const decoded = jwt.verify(headerToken, privateKey);
-    // status = 401;
+    const decoded = await jwt.verify(headerToken, privateKey);
 
     if (!decoded) return res.status(status).json({ status, success, error: 'Invalid token provided' });
+    const { rows } = await dbConnection.query(findEmployee, [decoded]);
 
-    const getEmployee = employee(decoded);
-    if (!getEmployee) return res.status(status).json({ status, error: 'Invalid token provided' });
+    if (!rows[0]) {
+      return res.status(400).json({ status, success, error: 'Invalid token provided' });
+    }
 
-    req.currentEmployee = getEmployee;
+    req.currentEmployee = rows[0];
 
     next();
   } catch (error) {
