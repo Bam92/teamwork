@@ -208,6 +208,7 @@ describe('Article controller', () => {
   });
 
   describe('Delete articles', () => {
+<<<<<<< HEAD
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)
         .delete(`${baseUrl2}/articles/:id`)
@@ -217,6 +218,17 @@ describe('Article controller', () => {
           done();
         });
     });
+=======
+    // it('should throw error if no valid token is provided', (done) => {
+    //   chai.request(app)
+    //     .delete(`${baseUrl}/articles/:id`)
+    //     .set('token', inValidToken)
+    //     .then((res) => {
+    //       expect(res).to.have.status(401);
+    //       done();
+    //     });
+    // });
+>>>>>>> :sparkles: ft(psql):add create article endpoint
 
     it('should throw an error if no token is provided', (done) => {
       chai.request(app)
@@ -291,7 +303,11 @@ describe('Article controller', () => {
 
     it('should not post comment if no comment field is provided', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/articles/2/comments`)
+=======
+        .post(`${baseUrl}/articles/2/comments`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .send({ comment: '' })
         .set('token', validToken)
         .then((res) => {
@@ -302,7 +318,11 @@ describe('Article controller', () => {
 
     it('should not post comment if article does not exist', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/articles/255/comments`)
+=======
+        .post(`${baseUrl}/articles/255/comments`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .send({ comment: '' })
         .set('token', validToken)
         .then((res) => {
@@ -326,7 +346,11 @@ describe('Article controller', () => {
   describe('Flag an article', () => {
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/articles/2/flag`)
+=======
+        .post(`${baseUrl}/articles/2/flag`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .set('token', inValidToken)
         .then((res) => {
           expect(res).to.have.status(401);
@@ -336,7 +360,11 @@ describe('Article controller', () => {
 
     it('should throw error if no token is provided', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/articles/2/flag`)
+=======
+        .post(`${baseUrl}/articles/2/flag`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .end((err, res) => {
           expect(res).to.have.status(400);
           done();
@@ -356,7 +384,11 @@ describe('Article controller', () => {
 
     it('should not flag an existing article with an empty reason field', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/articles/2/flag`)
+=======
+        .post(`${baseUrl}/articles/2/flag`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .set('token', validToken)
         .send({ reason: '' })
         .then((res) => {
@@ -368,7 +400,11 @@ describe('Article controller', () => {
 
     it('should throw an error if the requested article does not exist', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/articles/290/flag`)
+=======
+        .post(`${baseUrl}/articles/290/flag`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .set('token', validToken)
         .then((res) => {
           expect(res).to.have.status(404);
@@ -379,7 +415,11 @@ describe('Article controller', () => {
 
     it('should throw an error if id in not an number', (done) => {
       chai.request(app)
+<<<<<<< HEAD
         .post(`${baseUrl2}/comments/2i/flag`)
+=======
+        .post(`${baseUrl}/comments/2i/flag`)
+>>>>>>> :sparkles: ft(psql):add create article endpoint
         .set('token', validToken)
         .then((res) => {
           expect(res).to.have.status(400);

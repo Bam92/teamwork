@@ -5,7 +5,11 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
+<<<<<<< HEAD
 import { baseUrl2 } from '../../../config';
+=======
+import { endpoint } from '../../config';
+>>>>>>> :sparkles: ft(psql):add create article endpoint
 import swaggerDocument from './docs';
 import auth from './routes/auth';
 import articles from './routes/articles';
