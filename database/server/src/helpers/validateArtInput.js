@@ -10,4 +10,12 @@ const articleSchema = (body) => {
   return schema.validate(body);
 };
 
-export { articleSchema };
+const idSchema = (params) => {
+  const schema = Joi.object({
+    id: Joi.number().integer().required(),
+  });
+
+  return schema.validate(params);
+};
+
+export { articleSchema, idSchema };

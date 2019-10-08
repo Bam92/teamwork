@@ -1,5 +1,4 @@
 import { Client } from 'pg';
-import { employee_db, getOne } from '../models/employee';
 import token from '../helpers/getToken';
 import hash from '../helpers/hashPassword';
 import checkPassword from '../helpers/checkPassword';
@@ -72,14 +71,15 @@ class Auth {
    * @returns {object} user object
    */
   static signin(req, res) {
-    const success = true;
-    const status = 200;
-
-    const { email, password } = req.body;
+    let success = true;
+    let status = 200;
 
     const { error } = signinSchema(req.body);
+    const { email, password } = req.body;
 
     if (error) {
+      success = false;
+      status = 400;
       const errorMessage = error.details[0].message;
 
       return res.status(status).json({ status, success, error: errorMessage });

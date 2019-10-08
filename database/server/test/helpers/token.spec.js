@@ -3,7 +3,7 @@ import chai from 'chai';
 import jwt from 'jsonwebtoken';
 
 import tokenGenerator from '../../src/helpers/getToken';
-import { privateKey } from '../../../config';
+import { privateKey } from '../../../../config';
 
 chai.use(chaiHttp);
 const { expect } = chai;
