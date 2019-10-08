@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import app from '../../src/app';
-import { endpoint as baseUrl } from '../../../config';
+import { endpoint as baseUrl } from '../../../../config';
 
 chai.use(chaiHttp);
 

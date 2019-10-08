@@ -4,6 +4,6 @@ import Category from '../controllers/categories';
 
 const router = express.Router();
 
-// router.get('/articles/categories/:id', verifyToken, Category.getArticlesByTag);
+router.get('/articles/categories/:id', verifyToken, Category.getArticlesByTag);
 
 export default router;
