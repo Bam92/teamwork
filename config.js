@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 module.exports = {
   endpoint: process.env.API_SUFFIX,
+  baseUrl2: process.env.API_SUFFIX2,
   privateKey: process.env.PRIVATE_KEY,
   port: process.env.PORT,
   coveralls: process.env.COVERALLS_REPO_TOKEN,
