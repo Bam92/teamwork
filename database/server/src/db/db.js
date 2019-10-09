@@ -37,30 +37,6 @@ const createEmployeeTable = () => {
 };
 
 /**
- * Drop User Table
- */
-const dropEmployeeTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS employee';
-  pool.query(queryText)
-    .then(() => {
-      pool.end();
-      process.exit(0);
-    })
-    .catch(() => {
-      pool.end();
-      process.exit(0);
-    });
-};
-
-
-/**
- * Create All Tables
- */
-const createAllTables = () => {
-  dropEmployeeTable();
-};
-
-/**
  * Drop All Tables
  */
 const dropAllTables = () => {

@@ -3,15 +3,13 @@ import chaiHttp from 'chai-http';
 
 import app from '../../src/app';
 import { baseUrl2 } from '../../../../config';
+import { validToken, inValidToken } from '../tokens';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
 describe('Article controller', () => {
-  const inValidToken = 'eyJhiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im03dmtxaW5tNCIsImlhdCI6MTU2NTMyODI5M30.MV80v4kB25rub0RVV4EE0eEn7pX1QMnwN1pTfZKfMwA';
-  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
-
   describe('GET articles', () => {
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)
@@ -28,16 +26,6 @@ describe('Article controller', () => {
         .get(`${baseUrl2}/feeds`)
         .end((err, res) => {
           expect(res).to.have.status(400);
-          done();
-        });
-    });
-
-    it('should send list of all articles', (done) => {
-      chai.request(app)
-        .get(`${baseUrl2}/feeds`)
-        .set('token', validToken)
-        .then((res) => {
-          expect(res).to.have.status(200);
           done();
         });
     });

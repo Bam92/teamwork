@@ -5,11 +5,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
-<<<<<<< HEAD
-import { baseUrl2 } from '../../../config';
-=======
-import { endpoint } from '../../config';
->>>>>>> :sparkles: ft(psql):add create article endpoint
+import { endpoint as baseUrl } from '../../../config';
 import swaggerDocument from './docs';
 import auth from './routes/auth';
 import articles from './routes/articles';
@@ -23,14 +19,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('tiny'));
 
-app.use(`${baseUrl2}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(`${baseUrl}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => res.status(200).json({ status: 200, success: true, error: 'Welcome! The server is working properly' }));
 
-app.use(`${baseUrl2}/auth`, auth);
-app.use(baseUrl2, articles);
-app.use(baseUrl2, categories);
-app.use(baseUrl2, comments);
+app.use(`${baseUrl}/auth`, auth);
+app.use(baseUrl, articles);
+app.use(baseUrl, categories);
+app.use(baseUrl, comments);
 
 app.use((req, res) => {
   const err = new Error('Route Not Found');

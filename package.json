@@ -4,14 +4,17 @@
   "description": "Teamwork is an ​ internal social network for organizations’ employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding",
   "main": "database/server/src/app.js",
   "scripts": {
-    "build": "babel database/server/src -d database/server/dist",
-    "start": "yarn build && nodemon database/server/dist/server.js",
-    "table:create": "node server/dist/db/db.js createEmployeeTable",
-    "table:drop": "node server/dist/db/db.js dropEmployeeTable",
+    "build": "NODE_ENV=dev babel database/server/src -d database/server/dist",
+    "start": "NODE_ENV=dev yarn build && NODE_ENV=dev nodemon database/server/dist/server.js",
+    "table:create": "node --require @babel/register database/server/src/db/tablesCreate.js",
+    "table:drop": "node --require @babel/register database/server/src/db/tablesDrop.js",
     "populate": "node server/dist/db/seed.js createEmployee",
     "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
-    "test": "nyc --reporter=html mocha --require @babel/register database/server/test/ --timeout 10000 --exit",
+    "pretest": "yarn table:create",
+    "test": "NODE_ENV=test nyc --reporter=html mocha --require @babel/register database/server/test/ --timeout 10000 --exit",
+    "posttest": "yarn table:drop",
+    "test:local": "nyc --reporter=html mocha --require @babel/register database/server/test/* --timeout 10000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -32,6 +35,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
+    "@babel/runtime": "^7.6.3",
     "@hapi/joi": "^16.1.4",
     "babel-plugin-istanbul": "^5.2.0",
     "babel-polyfill": "^6.26.0",
@@ -54,6 +58,7 @@
     "swagger-ui-express": "^4.1.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",

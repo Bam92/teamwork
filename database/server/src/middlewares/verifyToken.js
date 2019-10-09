@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { privateKey } from '../../../../config';
 import dbConnection from '../db/getConnection';
-import findEmployee from '../models/employee';
+import employee from '../models/employee';
 /**
    * Verify Token
    * @param {string} token
@@ -22,7 +22,7 @@ const verifyToken = async (req, res, next) => {
     const decoded = await jwt.verify(headerToken, privateKey);
 
     if (!decoded) return res.status(status).json({ status, success, error: 'Invalid token provided' });
-    const { rows } = await dbConnection.query(findEmployee, [decoded]);
+    const { rows } = await dbConnection.query(employee.findEmployee, [decoded]);
 
     if (!rows[0]) {
       return res.status(400).json({ status, success, error: 'Invalid token provided' });

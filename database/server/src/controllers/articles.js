@@ -1,11 +1,21 @@
-import { articleSchema } from '../helpers/validateArtInput';
+import { articleSchema, idSchema } from '../helpers/validateArtInput';
 import Search from '../helpers/search';
 import dbConnection from '../db/getConnection';
 import articleModel from '../models/articles';
 
 class Article {
   static async getArticles(req, res) {
-    return 'OK';
+    try {
+      const status = 200;
+      const success = true;
+      const { rows } = await dbConnection.query(articleModel.findAllArticles);
+
+      res.status(status).json({
+        status, success, message: 'Article recently published', data: rows,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: 500, success: false, error: error.message });
+    }
   }
 
   static async createArticle(req, res) {
@@ -23,7 +33,6 @@ class Article {
 
     const { title, article, category } = articleInfo;
     const articleDate = new Date();
-
     const findArticle = await Search.article(title);
 
     if (findArticle.rowCount !== 0) {
@@ -32,7 +41,6 @@ class Article {
 
     try {
       const addArticle = await dbConnection.query(articleModel.insertArticle, [title, article, articleDate, req.currentEmployee.id, category]);
-
       if (addArticle.rowCount !== 0) {
         success = true;
         status = 201;
@@ -52,7 +60,36 @@ class Article {
   }
 
   static async deleteArticle(req, res) {
-    return 'OK';
+    let status = 400;
+    let success = false;
+    const { id } = req.params;
+    const authorId = req.currentEmployee.id;
+
+    try {
+      const rows = await dbConnection.query(articleModel.findArtByAuth, [id, authorId]);
+
+      if (rows.rowCount === 0) {
+        res.status(status).json({
+          status, success, message: 'Sorry, you can only delete your own article',
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({ status: 500, success: false, error: error.message });
+    }
+
+    try {
+      status = 204;
+      success = true;
+      await dbConnection.query(articleModel.delArticle, [id]);
+
+      return res.status(status).json({
+        status, success, message: 'Article successfully deleted',
+      });
+    } catch (error) {
+      return res.status(500).json({ status: 500, success: false, error: error.message });
+    }
+
+
   }
 
   static async addComment(req, res) {

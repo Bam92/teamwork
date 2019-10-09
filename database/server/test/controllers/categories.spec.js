@@ -9,9 +9,6 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Category controller', () => {
-  const inValidToken = 'eyJhiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im03dmtxaW5tNCIsImlhdCI6MTU2NTMyODI5M30.MV80v4kB25rub0RVV4EE0eEn7pX1QMnwN1pTfZKfMwA';
-  const validToken = 'eyJhbGciOiJIUzI1NiJ9.c2FyYWgubGlmQGdtYWlsLmNvbQ.Y6hhZG0k3RbBA1Lm_Vjh5fDoxxNZHyVrW-_pVsQNBHY';
-
   describe('GET articles by category', () => {
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)

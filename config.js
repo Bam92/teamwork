@@ -8,6 +8,8 @@ module.exports = {
   privateKey: process.env.PRIVATE_KEY,
   port: process.env.PORT,
   coveralls: process.env.COVERALLS_REPO_TOKEN,
-  type: process.env.TYPE,
+  db_connection_test: process.env.DATABASE_URL_TEST,
   db_connection: process.env.DATABASE_URL,
+  environment: process.env.NODE_ENV,
+
 };
