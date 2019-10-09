@@ -1,4 +1,4 @@
-import { port, endpoint } from '../../../config';
+import { port, baseUrl2 } from '../../../config';
 
 module.exports = {
   openapi: '3.0.1',
@@ -9,17 +9,15 @@ module.exports = {
   },
   servers: [
     {
-      url: `http://localhost:${port}${endpoint}`,
+      url: `http://localhost:${port}${baseUrl2}`,
       description: 'Developement server',
     },
     {
-      url: `https://teamwork-andela.herokuapp.com${endpoint}`,
+      url: `https://teamwork-andela.herokuapp.com${baseUrl2}`,
       description: 'Production server',
     },
   ],
-  // security: [{
-  //   tokenAuth: []
-  // }],
+
   tags: [
     {
       name: 'Employee authentification',

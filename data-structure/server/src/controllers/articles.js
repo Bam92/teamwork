@@ -1,8 +1,10 @@
-import { comments_db, getAll, getOne, getById, getCommentsByArticleId } from '../models/articles';
+import {
+  comments_db, getAll, getOne, getById, getCommentsByArticleId,
+} from '../models/articles';
 import { saveCategories } from '../models/categories';
 import articles from '../data/articles';
 import flaggedArt from '../data/flaggedArt';
-import isFlagged  from '../models/flaggedArt';
+import isFlagged from '../models/flaggedArt';
 import { articleSchema } from '../../helpers/validateArtInput';
 
 class Article {
@@ -12,13 +14,14 @@ class Article {
    * @param {object} res
    * @returns {object} user object
    */
-    static getArticles(req, res) {
+  static getArticles(req, res) {
     const success = true;
     const status = 200;
     const data = getAll();
 
-    return res.status(status).json({ status, success, message: 'List of all articles sorted by date asc', data });
-
+    return res.status(status).json({
+      status, success, message: 'List of all articles sorted by date asc', data,
+    });
   }
 
   static createArticle(req, res) {
@@ -26,13 +29,14 @@ class Article {
     let status = 400;
 
     const articleInfo = req.body;
+    console.log('body here', articleInfo)
     const { title, article, category } = articleInfo;
-
     const { error } = articleSchema(articleInfo);
+
     if (error) {
       const errorMessage = error.details[0].message;
 
-      return res.status(status).json({status, success, error: errorMessage });
+      return res.status(status).json({ status, success, error: errorMessage });
     }
 
     if (getOne(title) === undefined) {
@@ -40,28 +44,29 @@ class Article {
       status = 201;
       let tagId;
 
-      if (category) tagId = saveCategories(category)
+      if (category) tagId = saveCategories(category);
       const data = {
         _id: articles.length + 1,
         title,
         article,
         createdOn: new Date(),
         authorId: req.currentEmployee._id,
-        categoryId: tagId
+        categoryId: tagId,
       };
 
-    articles.push(data)
+      articles.push(data);
 
-    return res.status(status).json({ status, success, message: 'Article successfully created', data });
-  } else {
+      return res.status(status).json({
+        status, success, message: 'Article successfully created', data,
+      });
+    }
     status = 409;
     return res.status(status).json({ status, success, error: 'Article already exists. Try again with another title' });
-    }
   }
 
   static updateArticle(req, res) {
     let success = false;
-    let  status = 400;
+    let status = 400;
     const { id } = req.params;
 
     const { title, article } = req.body;
@@ -74,10 +79,10 @@ class Article {
     }
 
     if (title || article) {
-        success = true;
-        status = 201;
+      success = true;
+      status = 201;
 
-        const data = articles.filter(art => art._id === parseInt(id)).map(art => {
+      const data = articles.filter((art) => art._id === parseInt(id)).map((art) => {
         art.updatedOn = new Date();
 
         if (title) art.title = title;
@@ -86,41 +91,37 @@ class Article {
         return art;
       });
 
-      return res.status(status).json({ status, success, message: 'article successfully edited', data });
-
-    } else {
-      return res.status(status).json({ status, success, error: 'title or article field not provided' });
+      return res.status(status).json({
+        status, success, message: 'article successfully edited', data,
+      });
     }
-
+    return res.status(status).json({ status, success, error: 'title or article field not provided' });
   }
 
   static deleteArticle(req, res) {
     let success = true;
-    let  status = 200;
+    let status = 200;
     const { id } = req.params;
 
     if (isNaN(id)) return res.status(400).json({ status: 400, success: false, error: 'id must be a number' });
 
-    const targetArt = getById(id)
-    , indexArt = articles.indexOf(targetArt)
-    ;
-
+    const targetArt = getById(id);
+    const indexArt = articles.indexOf(targetArt);
     if (!targetArt) {
       success = false;
       status = 404;
+
       return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
     }
 
-   articles.splice([indexArt],1);
+    articles.splice([indexArt], 1);
 
-  return res.status(status).json({ status, success, message: 'article successfully deleted' });
-
-
+    return res.status(status).json({ status, success, message: 'article successfully deleted' });
   }
 
   static addComment(req, res) {
     let success = true;
-    let  status = 201;
+    let status = 201;
     const { id } = req.params;
     const targetArt = getById(id);
 
@@ -139,7 +140,9 @@ class Article {
 
     const { title, article } = targetArt;
     const { comment } = req.body;
-    const saveComment = { _id: comments_db.length + 1, createdOn: new Date(), articleId: id, authorId: req.currentEmployee._id, comment };
+    const saveComment = {
+      _id: comments_db.length + 1, createdOn: new Date(), articleId: id, authorId: req.currentEmployee._id, comment,
+    };
 
     comments_db.push(saveComment);
 
@@ -155,14 +158,18 @@ class Article {
       return res.status(status).json({ status, success, error: 'comment is empty' });
     }
 
-    const data = { createdOn: new Date() + 1, articleTitle: title, article, comment };
+    const data = {
+      createdOn: new Date() + 1, articleTitle: title, article, comment,
+    };
 
-    return res.status(status).json({ status, success, message: 'comment successfully added', data });
+    return res.status(status).json({
+      status, success, message: 'comment successfully added', data,
+    });
   }
 
   static getArticle(req, res) {
     let success = true;
-    let  status = 201;
+    let status = 201;
     const { id } = req.params;
 
     if (isNaN(id)) {
@@ -180,20 +187,22 @@ class Article {
       return res.status(status).json({ status, success, error: `article with id ${id} does not exist` });
     }
 
-    const comments = getCommentsByArticleId(id)
+    const comments = getCommentsByArticleId(id);
 
-    delete targetArt._id
+    delete targetArt._id;
 
     const data = targetArt;
 
     data.comments = comments;
 
-    return res.status(status).json({ status, success, message: `all detail of article: ${id}`, data });
+    return res.status(status).json({
+      status, success, message: `all detail of article: ${id}`, data,
+    });
   }
 
   static flagArticle(req, res) {
     let success = true;
-    let  status = 201;
+    let status = 201;
     const { id } = req.params;
     const { reason } = req.body;
 
@@ -220,15 +229,14 @@ class Article {
     if (reason) {
       const flagged = { _id: flaggedArt.length + 1, articleId: parseInt(id), reason };
 
-      flaggedArt.push(flagged)
+      flaggedArt.push(flagged);
 
       return res.status(status).json({ status, success, message: `article with id ${id} successfully flagged` });
     }
-    else {
-      success = false;
-      status = 400;
-      return res.status(status).json({ status, success, error: 'Please state the reason why you want to flag this article' });
-    }
+
+    success = false;
+    status = 400;
+    return res.status(status).json({ status, success, error: 'Please state the reason why you want to flag this article' });
   }
 }
 
