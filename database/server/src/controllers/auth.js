@@ -3,7 +3,6 @@ import token from '../helpers/getToken';
 import hash from '../helpers/hashPassword';
 import checkPassword from '../helpers/checkPassword';
 import { signupSchema, signinSchema } from '../helpers/validateAuthInput';
-
 import { db_connection } from '../../../../config';
 
 const client = new Client({
@@ -92,8 +91,8 @@ class Auth {
           res.status(status).json(err);
         }
 
-        if (!result) return res.status(404).json({ status: 404, success, error: 'Invalid credential 1' });
-        if (!checkPassword(password, result.rows[0].password)) return res.status(404).json({ status: 404, success, message: 'Invalid credential 2' });
+        if (!result) return res.status(401).json({ status: 401, success, error: 'Invalid credential' });
+        if (!checkPassword(password, result.rows[0].password)) return res.status(401).json({ status: 401, success, message: 'Invalid credential' });
 
         const data = result.rows[0];
         data.token = token(email);

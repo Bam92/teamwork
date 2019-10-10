@@ -1,8 +1,10 @@
 import { articleSchema, updateSchema } from '../helpers/validateArtInput';
+import { commentSchema } from '../helpers/validateCom';
 import Search from '../helpers/search';
-import {isValidId} from '../helpers/validateId';
+import { isValidId } from '../helpers/validateId';
 import dbConnection from '../db/getConnection';
 import articleModel from '../models/articles';
+import commentModel from '../models/comments';
 
 class Article {
   static async getArticles(req, res) {
@@ -42,7 +44,7 @@ class Article {
 
     try {
       const addArticle = await dbConnection.query(articleModel.insertArticle, [title, article, articleDate, req.currentEmployee.id, category]);
-      if (addArticle.rowCount !== 0) {
+      if (addArticle.rowCount === 1) {
         success = true;
         status = 201;
         const data = addArticle.rows[0];
@@ -142,11 +144,89 @@ class Article {
   }
 
   static async addComment(req, res) {
-    return 'OK';
+    let status = 400;
+    let success = false;
+    const { id } = req.params;
+
+    if (isValidId(id)) {
+      return res.status(status).json({
+        status, success, error: 'Id must be an integer',
+      });
+    }
+
+    const targetArticle = await dbConnection.query(articleModel.findArticleById, [id]);
+
+    if (targetArticle.rowCount === 0) {
+      status = 404;
+      return res.status(status).json({
+        status, success, error: 'Article does not exist',
+      });
+    }
+
+    const { error } = commentSchema(req.body);
+
+    if (error) {
+      const errorMessage = error.details[0].message;
+
+      return res.status(status).json({ status, success, error: errorMessage });
+    }
+
+    try {
+      status = 201,
+      success = true;
+      const { comment } = req.body;
+      const dateCom = new Date();
+      const authorId = req.currentEmployee.id;
+
+      const { rows } = await dbConnection.query(commentModel.insertComment, [comment, id, authorId, dateCom]);
+
+      const data = {
+        createdOn: rows[0].createdon,
+        articleTitle: targetArticle.rows[0].title,
+        article: targetArticle.rows[0].article,
+        comment: rows[0].comment,
+      };
+      res.status(status).json({
+        status, success, message: 'Your comment was sussfully added', data,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: 500, success: false, error: error.message });
+    }
   }
 
   static async getArticle(req, res) {
-    return 'OK';
+    let status = 400;
+    let success = false;
+    const { id } = req.params;
+
+    if (isValidId(id)) {
+      return res.status(status).json({
+        status, success, error: 'Id must be an integer',
+      });
+    }
+
+    try {
+      const targetArticle = await dbConnection.query(articleModel.findArticleById, [id]);
+
+      if (targetArticle.rowCount === 0) {
+        status = 404;
+        return res.status(status).json({
+          status, success, error: 'Article does not exist',
+        });
+      }
+
+      status = 200;
+      success = true;
+      const comments = await dbConnection.query(commentModel.findArticleComment, [id]);
+      const data = targetArticle.rows[0];
+      data.comment = comments.rows;
+
+      res.status(status).json({
+        status, success, message: 'Detail about article', data,
+      });
+    } catch (error) {
+      return res.status(500).json({ status: 500, success: false, error: error.message });
+    }
   }
 
   static async flagArticle(req, res) {

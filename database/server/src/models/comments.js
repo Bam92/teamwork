@@ -3,14 +3,19 @@ CREATE TABLE IF NOT EXISTS comment(
   id SERIAL PRIMARY KEY,
   comment VARCHAR(128) NOT NULL,
   articleId INTEGER NOT NULL,
-  FOREIGN KEY (articleId) REFERENCES article (id)
+  authorId INTEGER NOT NULL,
+  createdOn TIMESTAMP NOT NULL,
+  FOREIGN KEY (articleId) REFERENCES article (id),
+  FOREIGN KEY (authorId) REFERENCES employee (id)
   )`;
 
 const insertComment = `
 INSERT INTO comment(
   comment,
-  articleId
-  ) VALUES($1, $2) RETURNING *`;
+  articleId,
+  authorId,
+  createdOn
+  ) VALUES($1, $2, $3, $4) RETURNING *`;
 
 const findArticleComment = 'SELECT * FROM comment WHERE articleId = $1';
 
