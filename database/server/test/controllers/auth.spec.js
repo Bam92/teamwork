@@ -9,14 +9,14 @@ const { expect } = chai;
 
 describe('Authentification controller', () => {
   describe('Login an employee', () => {
-    it('should log in an existing employee successfully', (done) => {
+    it('should log in an existing employee successfully', async() => {
       const user = { email: 'sarah.lif@gmail.com', password: 'S@rah123' };
-      chai.request(app)
+      await chai.request(app)
         .post(`${baseUrl2}/auth/signin`)
         .send(user)
         .then((res) => {
           expect(res).to.have.status(200);
-          done();
+
         });
     });
 
