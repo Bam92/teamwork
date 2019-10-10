@@ -5,7 +5,7 @@ const signupSchema = (body) => {
     first_name: Joi.string().required().min(3).trim(),
     last_name: Joi.string().min(3).trim(),
     email: Joi.string().email().required().trim(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{3,30}$/).required().trim(),
+    password: Joi.string().min(4).required().trim(),
     gender: Joi.string().min(4).trim(),
     jobRole: Joi.string().min(4).trim(),
     department: Joi.string().min(4).trim(),

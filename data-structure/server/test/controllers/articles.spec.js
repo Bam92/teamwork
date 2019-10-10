@@ -144,7 +144,7 @@ describe('Article controller', () => {
 
     it('should throw an error if no token is provided', (done) => {
       chai.request(app)
-        .patch(`${baseUrl2}/articles/:id`)
+        .patch(`${baseUrl}/articles/:id`)
         .end((err, res) => {
           expect(res).to.have.status(400);
           done();
@@ -197,7 +197,7 @@ describe('Article controller', () => {
       };
 
       chai.request(app)
-        .patch(`${baseUrl2}/articles/100`)
+        .patch(`${baseUrl}/articles/100`)
         .set('token', validToken)
         .send(newArt)
         .then((res) => {
@@ -210,7 +210,7 @@ describe('Article controller', () => {
   describe('Delete articles', () => {
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)
-        .delete(`${baseUrl2}/articles/:id`)
+        .delete(`${baseUrl}/articles/:id`)
         .set('token', inValidToken)
         .then((res) => {
           expect(res).to.have.status(401);
@@ -250,7 +250,7 @@ describe('Article controller', () => {
 
     it('should delete article', (done) => {
       chai.request(app)
-        .delete(`${baseUrl2}/articles/1`)
+        .delete(`${baseUrl}/articles/1`)
         .set('token', validToken)
         .then((res) => {
           expect(res).to.have.status(200);
@@ -262,7 +262,7 @@ describe('Article controller', () => {
   describe('Add comment on articles', () => {
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/:id/comments`)
+        .post(`${baseUrl}/articles/:id/comments`)
         .set('token', inValidToken)
         .then((res) => {
           expect(res).to.have.status(401);
@@ -291,7 +291,7 @@ describe('Article controller', () => {
 
     it('should not post comment if no comment field is provided', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/2/comments`)
+        .post(`${baseUrl}/articles/2/comments`)
         .send({ comment: '' })
         .set('token', validToken)
         .then((res) => {
@@ -302,7 +302,7 @@ describe('Article controller', () => {
 
     it('should not post comment if article does not exist', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/255/comments`)
+        .post(`${baseUrl}/articles/255/comments`)
         .send({ comment: '' })
         .set('token', validToken)
         .then((res) => {
@@ -326,7 +326,7 @@ describe('Article controller', () => {
   describe('Flag an article', () => {
     it('should throw error if no valid token is provided', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/2/flag`)
+        .post(`${baseUrl}/articles/2/flag`)
         .set('token', inValidToken)
         .then((res) => {
           expect(res).to.have.status(401);
@@ -336,7 +336,7 @@ describe('Article controller', () => {
 
     it('should throw error if no token is provided', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/2/flag`)
+        .post(`${baseUrl}/articles/2/flag`)
         .end((err, res) => {
           expect(res).to.have.status(400);
           done();
@@ -356,7 +356,7 @@ describe('Article controller', () => {
 
     it('should not flag an existing article with an empty reason field', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/2/flag`)
+        .post(`${baseUrl}/articles/2/flag`)
         .set('token', validToken)
         .send({ reason: '' })
         .then((res) => {
@@ -368,7 +368,7 @@ describe('Article controller', () => {
 
     it('should throw an error if the requested article does not exist', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/articles/290/flag`)
+        .post(`${baseUrl}/articles/290/flag`)
         .set('token', validToken)
         .then((res) => {
           expect(res).to.have.status(404);
@@ -379,7 +379,7 @@ describe('Article controller', () => {
 
     it('should throw an error if id in not an number', (done) => {
       chai.request(app)
-        .post(`${baseUrl2}/comments/2i/flag`)
+        .post(`${baseUrl}/comments/2i/flag`)
         .set('token', validToken)
         .then((res) => {
           expect(res).to.have.status(400);

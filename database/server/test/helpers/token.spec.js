@@ -15,7 +15,6 @@ const verify = jwt.verify(token, privateKey);
 
 describe('Generate token', () => {
   it('should generate a valid token', () => {
-
     expect(verify).to.be.eq(email);
   });
 });
