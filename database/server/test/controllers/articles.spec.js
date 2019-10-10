@@ -68,7 +68,6 @@ describe('Article controller', () => {
 
     it('should not create an article with a empty description field', (done) => {
       const newArt = { title: 'Just a test', article: '' };
-
       chai.request(app)
         .post(`${baseUrl2}/articles`)
         .set('token', validToken)

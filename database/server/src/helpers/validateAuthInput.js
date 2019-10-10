@@ -18,7 +18,7 @@ const signupSchema = (body) => {
 const signinSchema = (body) => {
   const schema = Joi.object({
     email: Joi.string().email().required().trim(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{3,30}$/).required().trim(),
+    password: Joi.string().min(4).required().trim(),
   });
 
   return schema.validate(body);

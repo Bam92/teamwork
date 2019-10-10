@@ -14,8 +14,16 @@ const idSchema = (params) => {
   const schema = Joi.object({
     id: Joi.number().integer().required(),
   });
-
-  return schema.validate(params);
 };
 
-export { articleSchema, idSchema };
+const updateSchema = (body) => {
+  const schema = Joi.object({
+    title: Joi.string().min(10).max(50),
+    article: Joi.string().min(20).max(1000),
+  });
+
+  return schema.validate(body);
+};
+
+
+export { articleSchema, idSchema, updateSchema };

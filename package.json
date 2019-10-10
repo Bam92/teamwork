@@ -55,10 +55,11 @@
     "nyc": "^14.1.1",
     "pg": "^7.12.1",
     "pg-format": "^1.0.4",
-    "swagger-ui-express": "^4.1.1"
+    "swagger-ui-express": "^4.1.1",
+    "@babel/plugin-transform-runtime": "^7.6.2"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.6.2",
+
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",

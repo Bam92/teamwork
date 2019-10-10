@@ -1,5 +1,6 @@
-import { articleSchema, idSchema } from '../helpers/validateArtInput';
+import { articleSchema, updateSchema } from '../helpers/validateArtInput';
 import Search from '../helpers/search';
+import {isValidId} from '../helpers/validateId';
 import dbConnection from '../db/getConnection';
 import articleModel from '../models/articles';
 
@@ -56,7 +57,57 @@ class Article {
   }
 
   static async updateArticle(req, res) {
-    return 'OK';
+    let status = 400;
+    let success = false;
+    const { id } = req.params;
+    const authorId = req.currentEmployee.id;
+
+    const { error } = updateSchema(req.body);
+
+    if (error) {
+      const errorMessage = error.details[0].message;
+
+      return res.status(status).json({ status, success, error: errorMessage });
+    }
+
+
+    try {
+      const rows = await dbConnection.query(articleModel.findArtByAuth, [id, authorId]);
+      const { title } = req.body;
+      const { article } = req.body;
+
+      if (rows.rowCount === 0) {
+        res.status(status).json({
+          status, success, message: 'Sorry, this is not part of your articles',
+        });
+      }
+
+
+      if (title) {
+        status = 201;
+        success = true;
+        await dbConnection.query(articleModel.updateTitle, [title, id]);
+        const targetArticle = await dbConnection.query(articleModel.findArticleById, [id]);
+
+        return res.status(status).json({
+          status, success, message: 'Title successfully edited', data: targetArticle.rows[0],
+        });
+      }
+
+      if (article) {
+        status = 201;
+        success = true;
+        await dbConnection.query(articleModel.updateBody, [article, id]);
+        const targetArticle = await dbConnection.query(articleModel.findArticleById, [id]);
+
+
+        return res.status(status).json({
+          status, success, message: 'Body successfully edited', data: targetArticle.rows[0],
+        });
+      }
+    } catch (error) {
+      return res.status(status).json({ status, success, error: error.message });
+    }
   }
 
   static async deleteArticle(req, res) {
@@ -88,8 +139,6 @@ class Article {
     } catch (error) {
       return res.status(500).json({ status: 500, success: false, error: error.message });
     }
-
-
   }
 
   static async addComment(req, res) {
