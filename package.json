@@ -6,15 +6,15 @@
   "scripts": {
     "build": "NODE_ENV=dev babel database/server/src -d database/server/dist",
     "start": "NODE_ENV=dev yarn build && NODE_ENV=dev nodemon database/server/dist/server.js",
-    "table:create": "NODE_ENV=dev node --require @babel/register database/server/src/db/tablesCreate.js",
-    "table:drop": "NODE_ENV=dev node --require @babel/register database/server/src/db/tablesDrop.js",
-    "populate": "node server/dist/db/seed.js createEmployee",
+    "table:create": "NODE_ENV=test node --require @babel/register database/server/src/db/tablesCreate.js",
+    "table:drop": "NODE_ENV=test node --require @babel/register database/server/src/db/tablesDrop.js",
+    "populate": "NODE_ENV=test node --require @babel/register database/server/src/db/testUser.js",
     "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
-    "pretest": "yarn table:create",
-    "test": "NODE_ENV=test nyc --reporter=html mocha --require @babel/register database/server/test/ --timeout 10000 --exit",
+    "pretest": "yarn table:create && yarn populate",
+    "test": "NODE_ENV=test nyc --reporter=html mocha --require @babel/register database/server/test/* --timeout 10000 --exit",
     "posttest": "yarn table:drop",
-    "test:local": "nyc --reporter=html mocha --require @babel/register database/server/test/* --timeout 10000 --exit",
+    "test:local": "NODE_ENV=dev nyc --reporter=html mocha --require @babel/register database/server/test/* --timeout 10000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

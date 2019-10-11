@@ -19,6 +19,7 @@ class Article {
     } catch (error) {
       return res.status(500).json({ status: 500, success: false, error: error.message });
     }
+
   }
 
   static async createArticle(req, res) {
@@ -63,6 +64,12 @@ class Article {
     let success = false;
     const { id } = req.params;
     const authorId = req.currentEmployee.id;
+
+    if (isValidId(id)) {
+      return res.status(status).json({
+        status, success, error: 'Id must be an integer',
+      });
+    }
 
     const { error } = updateSchema(req.body);
 
@@ -118,10 +125,17 @@ class Article {
     const { id } = req.params;
     const authorId = req.currentEmployee.id;
 
+    if (isValidId(id)) {
+      return res.status(status).json({
+        status, success, error: 'Id must be an integer',
+      });
+    }
+
     try {
       const rows = await dbConnection.query(articleModel.findArtByAuth, [id, authorId]);
 
       if (rows.rowCount === 0) {
+        status = 404;
         res.status(status).json({
           status, success, message: 'Sorry, you can only delete your own article',
         });
@@ -227,10 +241,6 @@ class Article {
     } catch (error) {
       return res.status(500).json({ status: 500, success: false, error: error.message });
     }
-  }
-
-  static async flagArticle(req, res) {
-    return 'OK';
   }
 }
 

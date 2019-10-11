@@ -29,7 +29,7 @@ class Auth {
     if (error) {
       const errorMessage = error.details[0].message;
 
-      return res.status(status).json({ status, success, error: errorMessage });
+      return res.status(400).json({ status: 400, success, error: errorMessage });
     }
 
     const userInfo = req.body;
