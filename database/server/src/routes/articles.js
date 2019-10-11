@@ -3,8 +3,7 @@
 * @apiParam  {String} [firstaName] First name
 * @apiParam  {String} [lastName] Last name
 * @apiParam  {String} [password] Password
-* @apiParam  {String} [gender] Password
-*
+* @apiParam  {String} [gender] Gender
 * @apiSuccess (201) {Object} mixed `Employee` object
 **/
 

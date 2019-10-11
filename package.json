@@ -6,8 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=dev babel database/server/src -d database/server/dist",
     "start": "NODE_ENV=dev yarn build && NODE_ENV=dev nodemon database/server/dist/server.js",
-    "table:create": "node --require @babel/register database/server/src/db/tablesCreate.js",
-    "table:drop": "node --require @babel/register database/server/src/db/tablesDrop.js",
+    "table:create": "NODE_ENV=dev node --require @babel/register database/server/src/db/tablesCreate.js",
+    "table:drop": "NODE_ENV=dev node --require @babel/register database/server/src/db/tablesDrop.js",
     "populate": "node server/dist/db/seed.js createEmployee",
     "dev": "DEBUG=app nodemon node server/dist/server.js",
     "logs:prod": "heroku logs --tail",
