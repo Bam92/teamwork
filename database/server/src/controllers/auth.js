@@ -4,6 +4,8 @@ import hash from '../helpers/hashPassword';
 import checkPassword from '../helpers/checkPassword';
 import { signupSchema, signinSchema } from '../helpers/validateAuthInput';
 import { db_connection } from '../../../../config';
+import employeeModel from '../models/employee';
+import dbConnection from '../db/getConnection';
 
 const client = new Client({
   connectionString: db_connection,
@@ -22,18 +24,19 @@ class Auth {
     let success = true;
     let status = 201;
 
-    const userInfo = req.body;
-    const {
-      first_name, last_name, email, password, gender, jobRole, department, address,
-    } = userInfo;
-    const hashPassword = hash(password);
-    const { error } = signupSchema(userInfo);
+    const { error } = signupSchema(req.body);
 
     if (error) {
       const errorMessage = error.details[0].message;
 
       return res.status(status).json({ status, success, error: errorMessage });
     }
+
+    const userInfo = req.body;
+    const {
+      first_name, last_name, email, password, gender, jobRole, department, address,
+    } = userInfo;
+    const hashPassword = hash(password);
 
 
     const cols = [first_name, last_name, email, hashPassword, gender, jobRole, department, address];
@@ -69,12 +72,11 @@ class Auth {
    * @param {object} res
    * @returns {object} user object
    */
-  static signin(req, res) {
+  static async signin(req, res) {
     let success = true;
     let status = 200;
 
     const { error } = signinSchema(req.body);
-    const { email, password } = req.body;
 
     if (error) {
       success = false;
@@ -82,6 +84,21 @@ class Auth {
       const errorMessage = error.details[0].message;
 
       return res.status(status).json({ status, success, error: errorMessage });
+    }
+
+    const { email, password } = req.body;
+
+    try {
+      const rows = await dbConnection.query(employeeModel.findEmployee, [email]);
+      status = 404;
+
+      if (rows.rowCount === 0) {
+        res.status(status).json({
+          status, success, message: 'Sorry, this user does not exist',
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({ status: 500, success, error: error.message });
     }
 
     client
