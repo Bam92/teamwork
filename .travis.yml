@@ -1,15 +1,14 @@
 language: node_js
 node_js:
   - "stable"
+services:
+  - postgresql
 cache: yarn
 script:
   - yarn test
 
 after_success:
   - "yarn coverage"
-
-services:
-  - postgresql
 
 before_script:
 - psql -c 'create database teamwork_test;' -U postgres

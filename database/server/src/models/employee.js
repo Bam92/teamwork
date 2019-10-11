@@ -1,4 +1,3 @@
-const findEmployee = 'SELECT * FROM employee WHERE email = $1';
 
 const createEmployeeTable = `
 CREATE TABLE IF NOT EXISTS employee(
@@ -13,6 +12,9 @@ CREATE TABLE IF NOT EXISTS employee(
   address VARCHAR(35)
   )`;
 
+const findEmployee = 'SELECT * FROM employee WHERE email = $1';
+const allUsers = 'SELECT * FROM employee';
+
 const insertEmployee = `
 INSERT INTO employee(
   email,
@@ -25,4 +27,5 @@ export default {
   createEmployeeTable,
   insertEmployee,
   findEmployee,
+  allUsers,
 };

@@ -11,8 +11,6 @@ import swaggerDocument from './docs';
 
 import auth from './routes/auth';
 import articles from './routes/articles';
-import comments from './routes/comments';
-
 
 const app = express();
 
@@ -27,7 +25,6 @@ app.get('/', (req, res) => res.status(200).json({ status: 200, success: true, me
 
 app.use(`${baseUrl2}/auth`, auth);
 app.use(`${baseUrl2}`, articles);
-app.use(`${baseUrl2}`, comments);
 
 app.use((req, res) => {
   const err = new Error('Route Not Found');
